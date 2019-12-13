@@ -5,6 +5,7 @@ import store from './store'
 
 import '@plugins/plugins'
 import '@plugins/nprogress'
+import '@plugins/components'
 import '@plugins/prototypes'
 
 import '@style/index.scss'
