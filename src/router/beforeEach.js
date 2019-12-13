@@ -5,25 +5,20 @@ import Toast from '@plugins/noty'
 
 const beforeEach = async (to, from, next) => {
   NProgress.start()
-
   // access control for dashboard
-  if (process.env.VUE_APP_SOURCE === 'dashboard') {
+  if (process.env.VUE_APP_SOURCE === 'Dashboard') {
     if (to.meta.auth === false) return next()
-
     await Auth.getToken()
-
     if (Auth.token && Auth.user) {
-      console.log(Auth.user)
-      const hasRole = await Auth.hasRole(['super admin', 'yo'])
-      console.log('has roles', hasRole)
+      const hasRole = await Auth.hasScope('is_admin')
       if (!hasRole) {
-        Toast.error('The account has no permission.')
+        Toast.error('没有足够权限.')
         Auth.logout()
         return next({ name: 'Auth.Login' }) // redirect to login
       }
       return next()
     } else {
-      Toast.error('Please login first.')
+      Toast.error('请登录。')
     }
 
     return next({ name: 'Auth.Login' }) // redirect to login

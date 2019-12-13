@@ -1,10 +1,11 @@
 <template>
   <main/>
+
 </template>
 
 <script>
 export default {
-  name: 'Wepay'
+  name: 'Notice'
 }
 </script>
 

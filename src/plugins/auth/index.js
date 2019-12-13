@@ -22,7 +22,6 @@ export function loginCheck (payload) {
   }
 
   let params = {}
-
   if (payload.account) {
     if (utils.isEmail(payload.account)) {
       params.email = payload.account
@@ -40,6 +39,7 @@ export function loginCheck (payload) {
   } else {
     return false
   }
+
   return params
 }
 
@@ -56,11 +56,10 @@ export default {
   async login (payload) {
     const params = loginCheck(payload)
     if (!params) return false
-
-    let res = await api[config.authResource].store(params)
+    let res = await api.auth.store(params)
     if (res) {
       this.setToken(res.token)
-      Toast.success('Welcome Back!')
+      Toast.success('登录成功，欢迎回来。')
       return res
     }
   },
@@ -68,7 +67,7 @@ export default {
     let res = await api[config.authResource].destroy()
     if (res) {
       await this.removeToken()
-      Toast.success('Logout Success!')
+      Toast.success('退出成功!')
       return res
       // !TODO might have bug with router refresh
       // router.go(-1)
@@ -78,7 +77,7 @@ export default {
     if (!res) {
       res = await api.me.index()
     }
-    vuex.dispatch('setUser', res)
+    vuex.dispatch('setUser', res.data)
   },
   async hasScope (scope = 'is_admin') {
     if (isEmpty(this.user)) {

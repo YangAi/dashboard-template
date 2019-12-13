@@ -1,8 +1,17 @@
 <template>
-  <div id="app">
+  <v-app>
     <router-view />
-  </div>
+  </v-app>
 </template>
 
-<style lang="scss">
-</style>
+<script>
+export default {
+  name: 'App',
+  components: {
+  },
+
+  data: () => ({
+    //
+  })
+}
+</script>

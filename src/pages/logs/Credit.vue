@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'Wepay'
+  name: 'Credit'
 }
 </script>
 
