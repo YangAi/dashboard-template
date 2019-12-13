@@ -1,7 +1,10 @@
-const index = {
+import messages from './messages'
+
+export default {
   apiUri: process.env.VUE_APP_API_URL,
   authResource: 'auth',
-  source: process.env.VUE_APP_SOURCE
+  source: process.env.VUE_APP_SOURCE,
+  language: process.env.VUE_APP_LANGUAGE,
+  appName: '旅行筛',
+  messages: messages[process.env.VUE_APP_LANGUAGE]
 }
-
-export default index

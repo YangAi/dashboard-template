@@ -2,6 +2,7 @@ import NProgress from 'nprogress'
 // import { isEmpty } from 'lodash'
 import Auth from '@/plugins/auth'
 import Toast from '@plugins/noty'
+import config from '@/config'
 
 const beforeEach = async (to, from, next) => {
   NProgress.start()
@@ -12,13 +13,13 @@ const beforeEach = async (to, from, next) => {
     if (Auth.token && Auth.user) {
       const hasRole = await Auth.hasScope('is_admin')
       if (!hasRole) {
-        Toast.error('没有足够权限.')
+        Toast.error(config.messages.router.noPermission)
         Auth.logout()
         return next({ name: 'Auth.Login' }) // redirect to login
       }
       return next()
     } else {
-      Toast.error('请登录。')
+      Toast.error(config.messages.router.loginFirst)
     }
 
     return next({ name: 'Auth.Login' }) // redirect to login

@@ -56,10 +56,10 @@ export default {
   async login (payload) {
     const params = loginCheck(payload)
     if (!params) return false
-    let res = await api.auth.store(params)
+    let res = await api[config.authResource].store(params)
     if (res) {
       this.setToken(res.token)
-      Toast.success('登录成功，欢迎回来。')
+      Toast.success(config.messages.auth.welcomeBack)
       return res
     }
   },
@@ -67,7 +67,7 @@ export default {
     let res = await api[config.authResource].destroy()
     if (res) {
       await this.removeToken()
-      Toast.success('退出成功!')
+      Toast.success(config.messages.auth.logout)
       return res
       // !TODO might have bug with router refresh
       // router.go(-1)

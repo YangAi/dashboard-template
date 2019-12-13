@@ -28,7 +28,7 @@
 <!--      </v-list-item-avatar>-->
 
       <v-list-item-title class="headline tracking-wide font-normal">
-        旅行筛
+        {{ $config.appName }}
       </v-list-item-title>
     </v-list-item>
 

@@ -6,10 +6,10 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-container class="tw-mt-8 md:tw-mt-40 tw-p-8 lg:tw-pl-12">
-          <h1 class="display-1 tw-mb-8">后台登录</h1>
+          <h1 class="display-1 tw-mb-8">{{ $config.messages.login.label.title }}</h1>
           <v-form ref="form" style="max-width: 300px">
-            <v-text-field v-model="form.account" label="账号" :rules="[rules.isRequired]" />
-            <v-text-field v-model="form.password" label="密码"
+            <v-text-field v-model="form.account" :label="$config.messages.login.label.account" :rules="[rules.isRequired]" />
+            <v-text-field v-model="form.password" :label="$config.messages.login.label.password"
                           :type="showPassword ? 'text' : 'password'"
                           :append-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
                           @click:append="showPassword = !showPassword"
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async submit () {
-      if (!this.$refs.form.validate()) return this.$noty.error('请输入正确的账号和密码。')
+      if (!this.$refs.form.validate()) return this.$noty.error(this.$config.messages.login.wrong)
       this.loading = true
       try {
         await this.$auth.login(this.form)
