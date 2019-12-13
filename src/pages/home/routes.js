@@ -8,7 +8,7 @@ export default [
         component: () => import('./Index.vue'),
         name: 'Home.Index',
         meta: {
-          title: '后台首页'
+          title: ''
         }
       }
     ]
