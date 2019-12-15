@@ -58,26 +58,26 @@ export default {
     if (!params) return false
     let res = await api[config.authResource].store(params)
     if (res) {
-      this.setToken(res.token)
+      this.setToken(res.data ? res.data.token : res.token)
       Toast.success(config.messages.auth.welcomeBack)
       return res
     }
   },
   async logout () {
-    let res = await api[config.authResource].destroy()
+    let res = await api[config.authResource].destroy('')
     if (res) {
       await this.removeToken()
       Toast.success(config.messages.auth.logout)
       return res
-      // !TODO might have bug with router refresh
-      // router.go(-1)
+      // TODO might have bug with router refresh
+      // router.go(0)
     }
   },
   async setUser (res) {
     if (!res) {
       res = await api.me.index()
     }
-    vuex.dispatch('setUser', res.data)
+    vuex.dispatch('setUser', res.data || res)
   },
   async hasScope (scope = 'is_admin') {
     if (isEmpty(this.user)) {

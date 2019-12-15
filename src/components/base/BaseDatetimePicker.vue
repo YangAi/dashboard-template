@@ -1,13 +1,13 @@
 <template>
   <v-dialog v-model="display" :width="dialogWidth">
     <template v-slot:activator="{ on }">
-      <igs-input-field
-          v-bind="$attrs"
-          :fields="fields"
-          v-model="formattedDatetime"
-          v-on="on"
-          @click.native="display = true"
-          readonly />
+      <base-input-field
+        v-bind="$attrs"
+        :fields="fields"
+        v-model="formattedDatetime"
+        v-on="on"
+        @click.native="display = true"
+        readonly />
     </template>
 
     <v-card>
@@ -30,11 +30,11 @@
           </v-tab-item>
           <v-tab-item key="timer">
             <v-time-picker
-                ref="timer"
-                class="v-time-picker-custom rounded-none elevation-0"
-                v-model="time"
-                v-bind="timePickerProps"
-                full-width />
+              ref="timer"
+              class="v-time-picker-custom rounded-none elevation-0"
+              v-model="time"
+              v-bind="timePickerProps"
+              full-width />
           </v-tab-item>
         </v-tabs>
       </v-card-text>
@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import { format, parse } from 'date-fns'
+import dayjs from 'dayjs'
 const DEFAULT_DATE = ''
-const DEFAULT_TIME = '00:00:00'
-const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd'
+const DEFAULT_TIME = '18:00:00'
+const DEFAULT_DATE_FORMAT = 'YYYY-MM-DD'
 const DEFAULT_TIME_FORMAT = 'HH:mm:ss'
 const DEFAULT_DIALOG_WIDTH = 340
 const DEFAULT_CLEAR_TEXT = 'CLEAR'
@@ -66,12 +66,7 @@ export default {
   },
   props: {
     fields: {
-      type: Object,
-      default: () => {
-        return {
-          type: 'string'
-        }
-      }
+      type: Object
     },
     datetime: {
       type: [Date, String],
@@ -126,7 +121,7 @@ export default {
       return DEFAULT_DATE_FORMAT + ' ' + DEFAULT_TIME_FORMAT
     },
     formattedDatetime () {
-      return this.selectedDatetime ? format(this.selectedDatetime, this.dateTimeFormat) : ''
+      return this.selectedDatetime ? dayjs(this.selectedDatetime).format(this.dateTimeFormat) : ''
     },
     selectedDatetime () {
       if (this.date && this.time) {
@@ -134,7 +129,7 @@ export default {
         if (this.time.length === 5) {
           datetimeString += ':00'
         }
-        return parse(datetimeString, this.defaultDateTimeFormat, new Date())
+        return dayjs(datetimeString).toString()
       } else {
         return null
       }
@@ -148,15 +143,15 @@ export default {
       if (!this.datetime) {
         return
       }
-      let initDateTime
-      if (this.datetime instanceof Date) {
-        initDateTime = this.datetime
-      } else if (typeof this.datetime === 'string' || this.datetime instanceof String) {
-        // see https://stackoverflow.com/a/9436948
-        initDateTime = parse(this.datetime, this.dateTimeFormat, new Date())
-      }
-      this.date = format(initDateTime, DEFAULT_DATE_FORMAT)
-      this.time = format(initDateTime, DEFAULT_TIME_FORMAT)
+      // let initDateTime
+      // // if (this.datetime instanceof Date) {
+      // //   initDateTime = this.datetime
+      // // } else if (typeof this.datetime === 'string' || this.datetime instanceof String) {
+      // //   // see https://stackoverflow.com/a/9436948
+      // //   initDateTime = parse(this.datetime, this.dateTimeFormat, new Date())
+      // // }
+      this.date = dayjs(this.datetime).format(DEFAULT_DATE_FORMAT)
+      this.time = dayjs(this.datetime).format(DEFAULT_TIME_FORMAT)
     },
     okHandler () {
       this.resetPicker()

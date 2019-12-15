@@ -83,7 +83,7 @@ export default {
         '内容',
         {
           icon: 'mdi-timeline-text-outline',
-          label: '时间轴',
+          label: '小组',
           children: [
             {
               to: 'Timelines.GoRadar',
@@ -102,7 +102,7 @@ export default {
         },
         {
           icon: 'mdi-tag-outline',
-          label: '尾单监控',
+          label: '活动',
           children: [
             {
               to: 'FinalSale.Pending',

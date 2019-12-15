@@ -5,6 +5,6 @@ export default {
   authResource: 'auth',
   source: process.env.VUE_APP_SOURCE,
   language: process.env.VUE_APP_LANGUAGE,
-  appName: '旅行筛',
+  appName: '本地宝',
   messages: messages[process.env.VUE_APP_LANGUAGE]
 }

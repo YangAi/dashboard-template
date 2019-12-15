@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import BetterTime from './time/Time'
+import BetterTime from './time/Time.vue'
 import BaseDatetimePicker from '../components/base/BaseDatetimePicker'
 import BaseInputField from '../components/base/BaseInputField'
 import BaseTextField from '../components/base/BaseTextField'

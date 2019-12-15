@@ -1,5 +1,5 @@
 <template>
-  <igs-text-field v-if="this.fields.type !== 'datetime'"
+  <base-text-field v-if="this.fields.type !== 'datetime'"
                 v-bind="$attrs"
                 v-model="innerValue"
                 :label="fields.label"

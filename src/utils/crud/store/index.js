@@ -1,13 +1,13 @@
 import state from './state'
-import getters from './getters'
-import mutations from './mutations'
+// import getters from './getters'
+// import mutations from './mutations'
 import actions from './actions'
 
 const crud = {
   namespaced: true,
   state,
-  getters,
-  mutations,
+  // getters,
+  // mutations,
   actions
 }
 

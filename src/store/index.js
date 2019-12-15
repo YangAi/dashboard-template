@@ -5,11 +5,16 @@ import mutations from './mutations'
 import * as actions from './actions'
 import * as getters from './getters'
 
+import crud from '@/utils/crud/store'
+
+const modules = { crud }
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state,
   mutations,
   actions,
-  getters
+  getters,
+  modules
 })

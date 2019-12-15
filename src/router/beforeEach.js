@@ -6,10 +6,13 @@ import config from '@/config'
 
 const beforeEach = async (to, from, next) => {
   NProgress.start()
+
+  if (to.meta.auth === false) return next()
+
+  await Auth.getToken()
+
   // access control for dashboard
   if (process.env.VUE_APP_SOURCE === 'Dashboard') {
-    if (to.meta.auth === false) return next()
-    await Auth.getToken()
     if (Auth.token && Auth.user) {
       const hasRole = await Auth.hasScope('is_admin')
       if (!hasRole) {

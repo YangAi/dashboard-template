@@ -27,27 +27,22 @@ export default http => {
       if (!error['response']) {
         return Promise.reject(error)
       }
-
-      if (error.response.data.message) {
-        Noty.error(error.response.data.message)
-      } else {
-        switch (error.response.status) {
-          case 401:
-            Noty.error(config.messages.http.error401)
-            Auth.logout()
-            break
-          case 403:
-            Noty.error(config.messages.http.error403)
-            break
-          case 500:
-          case 501:
-          case 503:
-            Noty.error(config.messages.http.error500)
-            break
-          default:
-            Noty.error(config.messages.http.errorDefault)
-            break
-        }
+      switch (error.response.status) {
+        case 401:
+          Noty.error(error.response.data.message || config.messages.http.error401)
+          Auth.logout()
+          break
+        case 403:
+          Noty.error(error.response.data.message || config.messages.http.error403)
+          break
+        case 500:
+        case 501:
+        case 503:
+          Noty.error(error.response.data.message || config.messages.http.error500)
+          break
+        default:
+          Noty.error(error.response.data.message || config.messages.http.errorDefault)
+          break
       }
 
       return Promise.reject(error.response)
