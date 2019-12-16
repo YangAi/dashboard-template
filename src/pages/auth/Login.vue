@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async submit () {
-      if (!this.$refs.form.validate()) return this.$noty.error(this.$config.messages.login.wrong)
+      if (!this.$refs.form.validate()) return this.$toast.error(this.$config.messages.login.wrong)
       this.loading = true
       try {
         await this.$auth.login(this.form)

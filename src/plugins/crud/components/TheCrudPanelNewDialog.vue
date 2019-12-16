@@ -39,7 +39,7 @@ export default {
       try {
         const res = this.$api[this.model.id].store(this.form)
         if (res) {
-          this.$noty.success(this.$t('messages.stored.success'))
+          this.$toast.success(this.$t('messages.stored.success'))
           this.$router.go()
         }
       } catch (e) {

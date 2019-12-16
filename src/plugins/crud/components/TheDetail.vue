@@ -125,7 +125,7 @@ export default {
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
           // TODO 加上i8n
-          this.$noty.warning('已经第一条')
+          this.$toast.warning('已经第一条')
         }
       }
       if (action === 'next') {
@@ -134,7 +134,7 @@ export default {
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
           // TODO 加上i8n
-          this.$noty.warning('已经最后一条')
+          this.$toast.warning('已经最后一条')
         }
       }
     },

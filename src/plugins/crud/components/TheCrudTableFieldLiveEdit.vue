@@ -45,7 +45,7 @@ export default {
       try {
         const res = this.$api[this.resource].update(this.innerValue[this.primaryKey], this.innerValue)
         this.innerValue = res.data || res
-        this.$noty.success(this.$t('messages.updated.success'))
+        this.$toast.success(this.$t('messages.updated.success'))
       } catch (e) {
         console.log(e)
       }
@@ -57,7 +57,7 @@ export default {
       this.backUp = this.innerValue[this.field.value]
     },
     close () {
-      // this.$noty.success('close')
+      // this.$toast.success('close')
     }
   }
 }

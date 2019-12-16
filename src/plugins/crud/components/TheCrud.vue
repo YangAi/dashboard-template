@@ -170,7 +170,7 @@ export default {
       try {
         const res = await this.$api[this.resource].index()
         this.list = res.data || res
-        this.$noty.success(this.$t('messages.loaded.success'))
+        this.$toast.success(this.$t('messages.loaded.success'))
       } catch (e) {
         console.log(e)
       }
@@ -194,7 +194,7 @@ export default {
           this.list = this._.filter(this.list, (o) => {
             return o[this.model.primaryKey] !== item[this.model.primaryKey]
           })
-          this.$noty.info(this.$t('messages.deleted.success'))
+          this.$toast.info(this.$t('messages.deleted.success'))
         }
       } catch (e) {
         console.log(e)
