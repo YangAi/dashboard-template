@@ -9,7 +9,9 @@ let resource = {
 }
 
 forEach(crud, (item) => {
-  resource[item.id] = new Resource(item.url)
+  if (!item.subModel) {
+    resource[item.id] = new Resource(item.url)
+  }
 })
 
 resource[config.authResource] = new Resource('/' + config.authResource)

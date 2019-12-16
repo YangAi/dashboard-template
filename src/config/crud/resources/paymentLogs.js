@@ -3,7 +3,7 @@ export default {
   url: '/backend/payment-logs',
   primaryKey: 'id',
   title: '支付日志',
-  relatedModel: 'order',
+  relatedModel: ['order'],
   fields: [
     {
       text: 'ID',

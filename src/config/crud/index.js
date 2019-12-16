@@ -1,9 +1,13 @@
-import events from './resources/events'
+import event from './resources/event'
 import paymentLogs from './resources/paymentLogs'
 import order from './resources/order'
+import content from './resources/content'
+import user from './resources/user'
 
 export default {
-  events,
+  event,
   paymentLogs,
-  order
+  order,
+  content,
+  user
 }

@@ -5,7 +5,7 @@ import mutations from './mutations'
 import * as actions from './actions'
 import * as getters from './getters'
 
-import crud from '@/utils/crud/store'
+import crud from '@/plugins/crud/store'
 
 const modules = { crud }
 
