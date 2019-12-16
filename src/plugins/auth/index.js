@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import vuex from './vuex'
 import api from '@/services/api'
 import router from '@/router'
@@ -5,11 +6,11 @@ import localforage from 'localforage'
 import { isEmpty, trim, replace } from 'lodash'
 import utils from '@utils/client'
 import { setToken as setAjaxToken } from '@/plugins/http'
-import Toast from '@plugins/noty'
 import config from '@/config'
 
 export function loginCheck (payload) {
   if ((!payload.phone && !payload.email && !payload.account) || (!payload.password && !payload.code)) {
+    Vue.toast.error('please ')
     return false
   }
 
@@ -59,7 +60,7 @@ export default {
     let res = await api[config.authResource].store(params)
     if (res) {
       this.setToken(res.data ? res.data.token : res.token)
-      Toast.success(config.messages.auth.welcomeBack)
+      Vue.$toast.success(config.messages.auth.welcomeBack)
       return res
     }
   },
@@ -67,7 +68,7 @@ export default {
     let res = await api[config.authResource].destroy('')
     if (res) {
       await this.removeToken()
-      Toast.success(config.messages.auth.logout)
+      Vue.$toast.success(config.messages.auth.logout)
       return res
       // TODO might have bug with router refresh
       // router.go(0)
@@ -97,7 +98,7 @@ export default {
           return acceptedRoles.indexOf(o.name) >= 0
         })
       default:
-        Toast.error('Error!')
+        Vue.$toast.error('Error!')
         return false
     }
   },

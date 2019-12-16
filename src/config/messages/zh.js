@@ -5,6 +5,10 @@ export default {
       account: '账号',
       password: '密码'
     },
+    buttons: {
+      login: '登录',
+      goBack: 'Go to front page'
+    },
     wrong: '请输入正确的账号和密码。'
   },
   router: {

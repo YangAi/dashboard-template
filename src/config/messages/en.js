@@ -5,6 +5,10 @@ export default {
       account: 'Account',
       password: 'Password'
     },
+    buttons: {
+      login: 'Login',
+      goBack: 'Go to front page'
+    },
     wrong: 'Please enter your username and password.'
   },
   router: {
@@ -12,6 +16,7 @@ export default {
     loginFirst: 'Please sign in first.'
   },
   auth: {
+      
     welcomeBack: 'Welcome Back!',
     logout: 'logout finished.'
   },

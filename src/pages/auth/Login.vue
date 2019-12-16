@@ -15,8 +15,9 @@
                           @click:append="showPassword = !showPassword"
                           :rules="[rules.isRequired]" />
           </v-form>
-          <v-btn elevation="0" @click.native="submit" color="primary" :loading="loading">登录</v-btn>
-          <a href="https://igws.indiana.edu/" class="caption tw-absolute tw-bottom-0 tw-flex tw-items-center tw-text-gray-700"><v-icon small class="mr-2 tw-text-gray-700">mdi-arrow-left</v-icon> 返回旅行筛</a>
+          <v-btn elevation="0" @click.native="submit" color="primary" :loading="loading">{{ $config.messages.login.buttons.login }}</v-btn>
+          <a href="https://igws.indiana.edu/" class="caption tw-absolute tw-bottom-0 tw-mb-4 tw-flex tw-items-center tw-text-gray-700">
+            <v-icon small class="mr-2 tw-text-gray-700">mdi-arrow-left</v-icon> {{ $config.messages.login.buttons.goBack }}</a>
         </v-container>
       </v-col>
     </v-row>
@@ -44,13 +45,14 @@ export default {
       if (!this.$refs.form.validate()) return this.$toast.error(this.$config.messages.login.wrong)
       this.loading = true
       try {
-        await this.$auth.login(this.form)
-        this.loading = false
-        this.$router.push({ name: 'Home.Index' })
+        const res = await this.$auth.login(this.form)
+        if (res) {
+          this.$router.push({ name: 'Home.Index' })
+        }
       } catch (e) {
         console.log(e)
-        this.loading = false
       }
+      this.loading = false
     }
   }
 }

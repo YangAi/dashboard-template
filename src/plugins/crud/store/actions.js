@@ -1,5 +1,4 @@
 // import Vue from 'vue'
-// import Toast from '@plugins/noty'
 // import Api from '@api'
 
 const actions = {
