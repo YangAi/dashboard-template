@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="290">
+  <v-dialog v-model="dialog" persistent max-width="480">
     <template v-slot:activator="{ on }">
       <slot name="activator" :on="on">
         <v-btn fab dark small color="blue" v-on="on" class="tw-mx-2">
@@ -37,10 +37,10 @@ export default {
   methods: {
     async submit () {
       try {
-        const res = this.$api[this.model.id].store(this.form)
+        const res = await this.$api[this.model.id].store(this.form)
         if (res) {
           this.$toast.success(this.$t('messages.stored.success'))
-          this.$router.go()
+          this.dialog = false
         }
       } catch (e) {
         console.log(e)

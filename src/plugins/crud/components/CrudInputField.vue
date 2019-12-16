@@ -48,6 +48,9 @@ export default {
       if (['checkbox', 'date', 'datetime', 'richtext', 'select', 'slider', 'textarea', 'time'].includes(this.formattedType)) {
         return this.formattedType + '-field'
       }
+      if (this.formattedType === 'boolean') {
+        return 'checkbox-field'
+      }
       if (this.formattedType === 'html') {
         return 'richtext-field'
       }

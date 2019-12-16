@@ -1,27 +1,27 @@
 export default {
   loaded: {
-    success: '数据加载完成！',
-    error: '操作失败！'
+    success: 'loaded！',
+    error: 'error！'
   },
   added: {
-    success: '操作成功！',
-    error: '操作失败！'
+    success: 'success！',
+    error: 'error！'
   },
   updated: {
-    success: '操作成功！',
-    error: '操作失败！'
+    success: 'success！',
+    error: 'error！'
   },
   stored: {
-    success: '操作成功！',
-    error: '操作失败！'
+    success: 'success！',
+    error: 'error！'
   },
   removed: {
-    success: '操作成功！',
-    error: '操作失败！'
+    success: 'success！',
+    error: 'error！'
   },
   restored: {
-    success: '操作成功！',
-    error: '操作失败！'
+    success: 'success！',
+    error: 'error！'
   },
-  confirm: '确定要执行此操作？'
+  confirm: 'Are you sure？'
 }

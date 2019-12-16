@@ -9,7 +9,7 @@
       <v-icon>mdi-view-list</v-icon>
     </v-btn>
     <v-toolbar-title class="tertiary--text font-weight-light align-self-center">
-      {{ title || $route.meta.title || '页面' }}
+      {{ title || $route.meta.title || $t('app.header.title') }}
     </v-toolbar-title>
 
     <v-spacer />

@@ -13,7 +13,7 @@ forEach(crud, (item) => {
     resource[item.id] = new Resource(item.url)
   }
 })
-console.log('resource', config.authResource)
+
 resource[config.authResource] = new Resource('/' + config.authResource)
 
 export default resource

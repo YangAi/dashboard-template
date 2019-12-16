@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      所有{{ model.title }}
+      {{ $t('datatable.all') }} {{ model.title }}
       <the-crud-panel-new-dialog :resource="resource" />
       <the-crud-panel-filter :resource="resource" :filters="filters" @updateFilters="updateFilters" />
       <v-btn fab small dark color="blue-grey" @click="$emit('refresh')" class="tw-mx-2">

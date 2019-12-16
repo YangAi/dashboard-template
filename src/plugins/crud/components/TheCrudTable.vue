@@ -1,5 +1,5 @@
 <template>
-  <v-data-table ref="table" v-model="miao" :headers="headers" :items="list" v-bind="$attrs" :search="search" @current-items="currentItems">
+  <v-data-table ref="table" :headers="headers" :items="list" v-bind="$attrs" :search="search" @current-items="currentItems">
     <template v-for="(field) in fields" v-slot:[`item.${field.value}`]="{ item }">
       <slot :name="`field.${field.value}`" :item="item">
         <the-crud-table-field :field="field" :resource="resource" v-model="item" />
@@ -22,10 +22,14 @@ export default {
       required: true
     },
     search: {
-      type: String
+      type: String,
+      default: ''
     },
     filters: {
-      type: Object
+      type: Object,
+      default: () => {
+        return {}
+      }
     }
   },
   computed: {
@@ -51,8 +55,9 @@ export default {
   },
   methods: {
     itemFilter (field, value, search, item) {
-      if (this._.isEmpty(search) && this._.isEmpty(this.filters[field.value].value)) return true
-      if (!this._.isEmpty(this.filters[field.value].value) && !this.normalFilter(field, value)) {
+      if (this._.isEmpty(search) && (this._.isEmpty(this.filters) || this.filters[field.value].value === '')) return true
+
+      if (this.filters[field.value].value !== '' && !this.normalFilter(field, value)) {
         return false
       }
       if (search) {
@@ -68,21 +73,22 @@ export default {
       return true
     },
     normalFilter (item, fieldValue) {
-      const filter = this.filters[item.value]
-      if (this._.isEmpty(filter.value)) return true
+      const filter = this.filters[item.value].value.toString().toLowerCase()
       const field = fieldValue.toString().toLowerCase()
-      switch (filter.mode) {
+      switch (this.filters[item.value].mode) {
         case 'like':
-          return field.includes(filter.value)
+          return field.includes(filter)
         case 'equal':
-          return field === filter.value
+          return field === filter
         case 'list':
-          const tmpList = filter.value.split(';')
+          const tmpList = filter.split(';')
           return tmpList.includes(field)
-        case 'small':
-          return field < filter.value
-        case 'large':
-          return field > filter.value
+        case 'less':
+          return field < filter
+        case 'great':
+          return field > filter
+        case 'all':
+          return true
       }
       return false
     },

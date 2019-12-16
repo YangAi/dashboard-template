@@ -56,13 +56,16 @@
         <template v-slot:detail.actions="{ detail }">
           <slot name="detail.actions" :detail="detail" />
         </template>
+        <template v-slot:[`detail.${tab}.field.action`]="{ item }" v-for="tab in model.relatedModel">
+          <slot :name="`detail.${tab}.field.action`" :item="item" />
+        </template>
       </the-detail>
     </v-scroll-x-transition>
     <!--    fast update dialog start-->
-    <v-dialog v-if="canEdit" v-model="update.show" max-width="290">
+    <v-dialog v-if="canEdit" v-model="update.show" max-width="480">
       <v-card>
         <v-card-title class="headline">
-          {{ $t('actions.update') + $crud[resource].title + ' - ' + update.item[$crud[resource].primaryKey] }}
+          {{ $t('actions.update') + $crud[resource].title + ' - ' + update.form[$crud[resource].primaryKey] }}
         </v-card-title>
         <v-card-text>
           <the-crud-panel-new-form v-model="update.form" :resource="resource" />
@@ -86,6 +89,7 @@ import TheDetail from './TheDetail'
 import TheCrudPanelNewForm from './TheCrudPanelNewForm'
 import baseCrud from '../mixins/baseCrud'
 import availableFields from '../mixins/availableFields'
+import helpers from '../helpers/functions'
 export default {
   name: 'TheCurd',
   mixins: [baseCrud, availableFields],
@@ -156,9 +160,8 @@ export default {
       })
     },
     updateHandle (item) {
-      console.log('yo', item)
       this.update.show = true
-      this.update.item = this.update.form = item
+      this.update.form = this._.cloneDeep(item)
     },
     viewDetailHandle (item) {
       this.detail.show = true
@@ -176,12 +179,17 @@ export default {
       }
       this.loading = false
     },
-    async updateItem (item, form) {
+    async updateItem () {
       try {
-        const res = await this.$api[this.resource].update(item[this.model.primaryKey], form)
+        const res = await this.$api[this.resource].update(this.update.form[this.model.primaryKey], helpers.cleanFormBeforeSubmit(this.model, this.update.form))
         if (res) {
-          // TODO 更新成功后，同时更新下表格里的数据
-          // this.update.show = false
+          // update datatable without request data
+          const index = this._.findIndex(this.list, [this.model.primaryKey, this.update.form[this.model.primaryKey]])
+          const list = this._.cloneDeep(this.list)
+          list[index] = this.update.form
+          this.list = list
+          this.update.show = false
+          this.$toast.success(this.$t('messages.updated.success'))
         }
       } catch (e) {
         console.log(e)

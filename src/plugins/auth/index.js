@@ -9,7 +9,7 @@ import { setToken as setAjaxToken } from '@/plugins/http'
 import config from '@/config'
 
 export function loginCheck (payload) {
-  if ((!payload.phone && !payload.email && !payload.account) || (!payload.password && !payload.code)) {
+  if ((!payload.phone && !payload.email && !payload.account && !payload.username) || (!payload.password && !payload.code)) {
     Vue.toast.error('please ')
     return false
   }
@@ -23,6 +23,11 @@ export function loginCheck (payload) {
   }
 
   let params = {}
+
+  if (payload.username) {
+    params.username = payload.username
+  }
+
   if (payload.account) {
     if (utils.isEmail(payload.account)) {
       params.email = payload.account
@@ -59,7 +64,7 @@ export default {
     if (!params) return false
     let res = await api[config.authResource].store(params)
     if (res) {
-      this.setToken(res.data ? res.data.token : res.token)
+      this.setToken(res.token || res.access_token || res.data.token || res.data.access_token)
       Vue.$toast.success(config.messages.auth.welcomeBack)
       return res
     }

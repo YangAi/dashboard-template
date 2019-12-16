@@ -2,9 +2,9 @@
   <div class="the-detail">
     <v-card-title>
 <!--      TODO i18n-->
-      {{ $crud[resource].title }}详情 - {{ detail[$crud[resource].primaryKey] }}
+      {{ $crud[resource].title }} - {{ detail[$crud[resource].primaryKey] }}
       <v-spacer />
-      <template v-if="idList">
+      <template v-if="!_.isEmpty(idList)">
         <v-btn icon :loading="loading" @click="shiftDetail('prev')">
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -12,30 +12,30 @@
           <v-icon>mdi-chevron-right</v-icon>
         </v-btn>
       </template>
-      <v-btn icon @click="$emit('close')">
+      <v-btn v-if="!page" icon @click="$emit('close')">
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-card-title>
     <v-card-text>
       <slot name="detail.actions" :detail="detail" />
+      <v-switch v-model="canHotEdit" :label="$t('detail.liveEdit')" />
     </v-card-text>
     <v-tabs v-model="activeTab">
-      <v-tab href="#main">内容</v-tab>
-      <v-tab v-for="tab in tabs" :key="tab.key" :href="`#${tab.key}`">相关{{ tab.model.title }}</v-tab>
+      <v-tab href="#main">{{ $t('detail.main') }}</v-tab>
+      <v-tab v-for="tab in tabs" :key="tab.key" :href="`#${tab.key}`">{{ $t('detail.related')}} {{ tab.model.title }}</v-tab>
     </v-tabs>
     <v-tabs-items v-model="activeTab">
       <v-tab-item value="main">
         <v-container>
-          <v-card class="tw-my-4">
-            <v-card-text>
-              <v-switch v-model="canHotEdit" label="实时数据编辑" />
-            </v-card-text>
-          </v-card>
           <component :is="canHotEdit ? 'the-detail-content-form' : 'the-detail-content-read-only'" :resource="resource" v-model="detail" />
         </v-container>
       </v-tab-item>
       <v-tab-item v-for="tab in tabs" :key="tab.key" :value="tab.key">
-        <component :is="setComponent(tab.key)" :resource="tab.key" v-model="detail[tab.key]" />
+          <component :is="setComponent(tab.key)" :resource="tab.key" v-model="detail[tab.key]">
+              <template v-slot:[`detail.${tab.key}.field.action`]="{ item }">
+                  <slot :name="`detail.${tab.key}.field.action`" :item="item" />
+              </template>
+          </component>
       </v-tab-item>
     </v-tabs-items>
   </div>
@@ -60,8 +60,15 @@ export default {
     },
     idList: {
       type: [Array, Boolean],
+      default: () => []
+    },
+    page: {
+      type: Boolean,
       default: false
     }
+  },
+  created () {
+    this.loadItem()
   },
   computed: {
     tabs () {
@@ -76,7 +83,6 @@ export default {
 
       this._.forEach(models, (o) => {
         const model = pluralize.singular(o)
-        console.log(model)
         tabs.push({
           key: o,
           model: this.$crud[model]
@@ -98,15 +104,16 @@ export default {
   },
   watch: {
     id () {
-      this.loadItem(this.id)
+      this.loadItem()
     }
   },
   methods: {
-    async loadItem (id) {
-      if (!id) return
+    async loadItem () {
+      console.log('start')
+      if (!this.id) return
       this.loading = true
       try {
-        const res = await this.$api[this.resource].find(id, {
+        const res = await this.$api[this.resource].find(this.id, {
           include: this.$crud[this.resource].relatedModel
         })
         if (res) {

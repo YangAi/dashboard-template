@@ -26,7 +26,7 @@ export default {
   computed: {
     enabledFields () {
       return this._.filter(this.fields, (field) => {
-        return !(field.disabled === true || (field.guarded && this.model.guarded.includes(field.value)))
+        return !(field.disabled === true || (this.model.guarded && this.model.guarded.includes(field.value)))
       })
     },
     form: {
@@ -53,11 +53,11 @@ export default {
   },
   methods: {
     initialize () {
-      let temp = {}
-      this._.forEach(this.enabledFields, (field) => {
-        temp[field.value] = this.value[field.value] || ''
-      })
-      this.form = temp
+      // let temp = {}
+      // this._.forEach(this.enabledFields, (field) => {
+      //   temp[field.value] = this.value[field.value] || ''
+      // })
+      // this.form = temp
     }
   }
 }

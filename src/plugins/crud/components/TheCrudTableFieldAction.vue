@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 export default {
   name: 'TheCrudTableFieldAction',
   props: {
@@ -26,12 +25,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  computed: {
-    ...mapState('crud', [
-      'resource',
-      'primaryKey'
-    ])
   },
   methods: {
 

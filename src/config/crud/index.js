@@ -1,13 +1,7 @@
-import event from './resources/event'
-import paymentLogs from './resources/paymentLogs'
-import order from './resources/order'
-import content from './resources/content'
-import user from './resources/user'
+import spring from './resources/spring'
+import record from './resources/record'
 
 export default {
-  event,
-  paymentLogs,
-  order,
-  content,
-  user
+  spring,
+  record
 }

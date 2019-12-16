@@ -14,7 +14,6 @@ const beforeEach = async (to, from, next) => {
   // access control for dashboard
   if (process.env.VUE_APP_SOURCE === 'Dashboard') {
     if (Auth.token && Auth.user) {
-      console.log('???')
       const hasRole = true
       // await Auth.hasScope('is_admin')
       if (!hasRole) {

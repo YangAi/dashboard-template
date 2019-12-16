@@ -76,76 +76,51 @@ export default {
       image: 'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg',
       list: [
         {
-          to: '/',
+          to: 'Home.Index',
           icon: 'mdi-view-dashboard',
-          label: '主页'
+          label: 'Homepage'
         },
-        '内容',
+        'Springs',
         {
           icon: 'mdi-timeline-text-outline',
-          label: '小组',
+          label: 'Spring',
           children: [
             {
-              to: 'Timelines.GoRadar',
-              label: '旅行雷达'
+              to: 'Springs.Index',
+              label: 'All Springs'
             },
             {
-              to: 'Timelines.List',
-              label: '时间轴列表'
-            },
-            {
-              to: 'Timelines.New',
+              to: 'Springs.New',
               icon: 'mdi-timeline-text-outline',
-              label: '新时间轴'
+              label: 'New Springs'
             }
           ]
         },
         {
           icon: 'mdi-tag-outline',
-          label: '活动',
+          label: 'Records',
           children: [
             {
-              to: 'FinalSale.Pending',
-              label: '旅行雷达'
-            },
-            {
               to: 'FinalSale.List',
-              label: '时间轴列表'
+              label: 'All Records'
             },
             {
               to: 'FinalSale.New',
-              label: '手动添加'
+              label: 'New Record'
             }
           ]
         },
-        '数据',
+        'Permissions',
         {
+          to: 'FinalSale.New',
           icon: 'mdi-dots-horizontal',
-          label: '监控日志',
-          children: [
-            {
-              to: 'Logs.Spider',
-              label: '爬虫'
-            },
-            {
-              to: 'Logs.Notice',
-              label: '通知'
-            },
-            {
-              to: 'Logs.Credit',
-              label: '积分'
-            },
-            {
-              to: 'Logs.Wallet',
-              label: '钱包'
-            },
-            {
-              to: 'Logs.WePay',
-              label: '微信支付'
-            }
-          ]
+          label: 'Users'
+        },
+        {
+          to: 'FinalSale.New',
+          icon: 'mdi-dots-horizontal',
+          label: 'Roles'
         }
-
       ]
     }
   }

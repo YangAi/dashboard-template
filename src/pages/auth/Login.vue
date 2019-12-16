@@ -8,7 +8,7 @@
         <v-container class="tw-mt-8 md:tw-mt-40 tw-p-8 lg:tw-pl-12">
           <h1 class="display-1 tw-mb-8">{{ $config.messages.login.title }}</h1>
           <v-form ref="form" style="max-width: 300px">
-            <v-text-field v-model="form.account" :label="$config.messages.login.label.account" :rules="[rules.isRequired]" />
+            <v-text-field v-model="form.username" :label="$config.messages.login.label.username" :rules="[rules.isRequired]" />
             <v-text-field v-model="form.password" :label="$config.messages.login.label.password"
                           :type="showPassword ? 'text' : 'password'"
                           :append-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
@@ -34,7 +34,7 @@ export default {
       loading: false,
       showPassword: false,
       form: {
-        account: '',
+        username: '',
         password: ''
       },
       rules: rules

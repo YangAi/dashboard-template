@@ -12,9 +12,7 @@
         <tr v-if="!_.isObject(item)" :key="key">
           <td>{{ getName(key) }}:</td>
           <td>
-            <better-time v-if="['created_at', 'updated_at', 'deleted_at'].indexOf(key) >= 0"
-                         :time="item" />
-            <span v-else>{{ item }}</span>
+            <the-crud-table-field-normal :resource="resource" :value="item" :field="getField(key)" />
           </td>
         </tr>
       </template>
@@ -25,9 +23,11 @@
 
 <script>
 import baseCrud from '../mixins/baseCrud'
+import TheCrudTableFieldNormal from './TheCrudTableFieldNormal'
 
 export default {
   name: 'NestedDetailCardValueTable',
+  components: { TheCrudTableFieldNormal },
   mixins: [baseCrud],
   props: {
     items: {
@@ -46,15 +46,14 @@ export default {
       }
       return name || this._.capitalize(this._.lowerCase(key))
     },
-    getType (key) {
-      let name = false
+    getField (key) {
       if (this.model) {
         const field = this._.find(this.model.fields, { value: key })
         if (field) {
-          name = field.text
+          return field
         }
       }
-      return name || this._.capitalize(this._.lowerCase(key))
+      return { type: 'text' }
     }
   }
 }

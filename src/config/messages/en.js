@@ -16,7 +16,10 @@ export default {
     loginFirst: 'Please sign in first.'
   },
   auth: {
-      
+    error: {
+      required: 'Please enter all the required field.',
+      phone: 'Please enter a valid phone number'
+    },
     welcomeBack: 'Welcome Back!',
     logout: 'logout finished.'
   },

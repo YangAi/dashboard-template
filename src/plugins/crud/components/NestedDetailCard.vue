@@ -2,7 +2,7 @@
   <div class="nested-detail">
     <v-card class="tw-my-4">
       <!--      TODO i18n-->
-      <v-card-title>{{ model.title }}数据</v-card-title>
+      <v-card-title>{{ model.title }}</v-card-title>
       <v-card-text>
         <nested-detail-card-value-table :items="detail" :resource="resource" />
       </v-card-text>

@@ -9,7 +9,7 @@
     @open="open"
     @close="close">
     <slot>
-      {{ innerValue[field.value] }}
+      <the-crud-table-field-normal v-model="innerValue[field.value]" :field="field" />
     </slot>
     <template v-slot:input>
       <crud-input-field :key="field.value"
@@ -22,19 +22,15 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
 import CrudInputField from './CrudInputField'
 import baseMixins from './inputFields/baseMixins'
+import baseCrud from '../mixins/baseCrud'
+import TheCrudTableFieldNormal from './TheCrudTableFieldNormal'
+import helpers from '../helpers/functions'
 export default {
   name: 'TheCrudTableFieldLiveEdit',
-  mixins: [baseMixins],
-  components: { CrudInputField },
-  computed: {
-    ...mapState('crud', [
-      'resource',
-      'primaryKey'
-    ])
-  },
+  mixins: [baseMixins, baseCrud],
+  components: { TheCrudTableFieldNormal, CrudInputField },
   data () {
     return {
       backUp: ''
@@ -43,10 +39,11 @@ export default {
   methods: {
     async save () {
       try {
-        const res = this.$api[this.resource].update(this.innerValue[this.primaryKey], this.innerValue)
+        const res = this.$api[this.resource].update(this.innerValue[this.model.primaryKey], helpers.cleanFormBeforeSubmit(this.model, this.innerValue))
         this.innerValue = res.data || res
         this.$toast.success(this.$t('messages.updated.success'))
       } catch (e) {
+        this.$toast.error(this.$t('messages.updated.error'))
         console.log(e)
       }
     },

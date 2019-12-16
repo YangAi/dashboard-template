@@ -8,13 +8,11 @@
     <v-list>
       <v-list-item v-for="(item, index) in fieldsAvailable" :key="index">
         <v-row no-gutters>
-          <v-col :col="6">
-            <template v-if="numberType.includes(item.type)">
-              <v-select v-model="filters[item.value].mode" :items="filterModes.number" item-text="text" item-value="value" hide-details></v-select>
-            </template>
-            <template v-else>
-              <v-select v-model="filters[item.value].mode" :items="filterModes.normal" item-text="text" item-value="value" hide-details></v-select>
-            </template>
+          <v-col v-if="['boolean', 'checkbox'].includes(item.type)" :col="12">
+            <v-select v-model="filters[item.value].mode" :items="filterModes.checkbox" item-text="text" item-value="value" hide-details></v-select>
+          </v-col>
+          <v-col v-else :col="6">
+            <v-select v-model="filters[item.value].mode" :items="numberType.includes(item.type) ? filterModes.number : filterModes.normal" item-text="text" item-value="value" hide-details></v-select>
           </v-col>
           <v-col :col="6">
             <crud-input-field v-model="filters[item.value].value" :field="item" for-filter hide-details />
@@ -49,32 +47,46 @@ export default {
     },
     filterModes () {
       return {
-        number: [
+        checkbox: [
           {
-            value: 'small',
-            text: '小于'
+            value: 'equal',
+            text: this.$t('datatable.filter.equal')
           },
           {
-            value: 'large',
-            text: '大于'
+            value: 'all',
+            text: this.$t('datatable.filter.all')
+          }
+        ],
+        number: [
+          {
+            value: 'less',
+            text: this.$t('datatable.filter.less')
+          },
+          {
+            value: 'great',
+            text: this.$t('datatable.filter.great')
           },
           {
             value: 'equal',
-            text: '等于'
+            text: this.$t('datatable.filter.equal')
+          },
+          {
+            value: 'like',
+            text: this.$t('datatable.filter.like')
           }
         ],
         normal: [
           {
             value: 'like',
-            text: '相似'
+            text: this.$t('datatable.filter.like')
           },
           {
             value: 'equal',
-            text: '等于'
+            text: this.$t('datatable.filter.equal')
           },
           {
             value: 'list',
-            text: '列表'
+            text: this.$t('datatable.filter.list')
           }
         ]
       }
