@@ -89,7 +89,7 @@ import TheDetail from './TheDetail'
 import TheCrudPanelNewForm from './TheCrudPanelNewForm'
 import baseCrud from '../mixins/baseCrud'
 import availableFields from '../mixins/availableFields'
-import helpers from '../helpers/functions'
+import http from '../helpers/http'
 export default {
   name: 'TheCurd',
   mixins: [baseCrud, availableFields],
@@ -170,42 +170,28 @@ export default {
     },
     async loadIndex () {
       this.loading = true
-      try {
-        const res = await this.$api[this.resource].index()
+      const res = await http.index(this.resource)
+      if (res) {
         this.list = res.data || res
-        this.$toast.success(this.$t('messages.loaded.success'))
-      } catch (e) {
-        console.log(e)
       }
       this.loading = false
     },
     async updateItem () {
-      try {
-        const res = await this.$api[this.resource].update(this.update.form[this.model.primaryKey], helpers.cleanFormBeforeSubmit(this.model, this.update.form))
-        if (res) {
-          // update datatable without request data
-          const index = this._.findIndex(this.list, [this.model.primaryKey, this.update.form[this.model.primaryKey]])
-          const list = this._.cloneDeep(this.list)
-          list[index] = this.update.form
-          this.list = list
-          this.update.show = false
-          this.$toast.success(this.$t('messages.updated.success'))
-        }
-      } catch (e) {
-        console.log(e)
+      const res = await http.update(this.resource, this.update.form)
+      if (res) {
+        const index = this._.findIndex(this.list, [this.model.primaryKey, this.update.form[this.model.primaryKey]])
+        const list = this._.cloneDeep(this.list)
+        list[index] = this.update.form
+        this.list = list
+        this.update.show = false
       }
     },
     async deleteItem (item) {
-      try {
-        const res = await this.$api[this.resource].destroy(item[this.model.primaryKey])
-        if (res) {
-          this.list = this._.filter(this.list, (o) => {
-            return o[this.model.primaryKey] !== item[this.model.primaryKey]
-          })
-          this.$toast.info(this.$t('messages.deleted.success'))
-        }
-      } catch (e) {
-        console.log(e)
+      const res = await http.destroy(this.resource, item)
+      if (res) {
+        this.list = this._.filter(this.list, (o) => {
+          return o[this.model.primaryKey] !== item[this.model.primaryKey]
+        })
       }
     },
     setCurrentItems (val) {

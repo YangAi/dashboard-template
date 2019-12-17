@@ -26,7 +26,7 @@ import CrudInputField from './CrudInputField'
 import baseMixins from './inputFields/baseMixins'
 import baseCrud from '../mixins/baseCrud'
 import TheCrudTableFieldNormal from './TheCrudTableFieldNormal'
-import helpers from '../helpers/functions'
+import http from '../helpers/http'
 export default {
   name: 'TheCrudTableFieldLiveEdit',
   mixins: [baseMixins, baseCrud],
@@ -38,13 +38,9 @@ export default {
   },
   methods: {
     async save () {
-      try {
-        const res = this.$api[this.resource].update(this.innerValue[this.model.primaryKey], helpers.cleanFormBeforeSubmit(this.model, this.innerValue))
-        this.innerValue = res.data || res
-        this.$toast.success(this.$t('messages.updated.success'))
-      } catch (e) {
-        this.$toast.error(this.$t('messages.updated.error'))
-        console.log(e)
+      const res = await http.update(this.resource, this.innerValue)
+      if (res) {
+        this.innerValue = res
       }
     },
     cancel () {

@@ -46,6 +46,7 @@ import TheDetailContentReadOnly from './TheDetailContentReadOnly'
 import TheDetailContentForm from './TheDetailContentForm'
 import TheDetailContentTable from './TheDetailContentTable'
 import baseCrud from '../mixins/baseCrud'
+import http from '../helpers/http'
 export default {
   name: 'TheDetail',
   mixins: [baseCrud],
@@ -112,16 +113,10 @@ export default {
       console.log('start')
       if (!this.id) return
       this.loading = true
-      try {
-        const res = await this.$api[this.resource].find(this.id, {
-          include: this.$crud[this.resource].relatedModel
-        })
-        if (res) {
-          this.detail = res.data || res
-          if (!this._.isEmpty(this.idList)) this.activeIndex = this.idList.indexOf(this.id)
-        }
-      } catch (e) {
-        console.log(e)
+      const res = http.find(this.resource, this.id, this.$crud[this.resource].relatedModel)
+      if (res) {
+        this.detail = res
+        if (!this._.isEmpty(this.idList)) this.activeIndex = this.idList.indexOf(this.id)
       }
       this.loading = false
     },

@@ -13,7 +13,7 @@
 import baseCrud from '../mixins/baseCrud'
 import availableFields from '../mixins/availableFields'
 import TheCrudPanelNewForm from './TheCrudPanelNewForm'
-import helpers from '../helpers/functions'
+import http from '../helpers/http'
 export default {
   name: 'TheDetailContentForm',
   components: { TheCrudPanelNewForm },
@@ -40,14 +40,7 @@ export default {
   },
   methods: {
     async submit () {
-      try {
-        const res = await this.$api[this.resource].update(this.form[this.model.primaryKey], helpers.cleanFormBeforeSubmit(this.model, this.form))
-        if (res) {
-          this.$toast.success(this.$t('messages.updated.success'))
-        }
-      } catch (e) {
-        this.$toast.error(this.$t('messages.updated.error'))
-      }
+      await http.update(this.resource, this.form)
     }
   }
 }

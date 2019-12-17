@@ -8,7 +8,7 @@ export default {
   url: '/spring-records',
   primaryKey: 'id',
   title: 'Record',
-  relatedModel: [],
+  relatedModel: ['spring'],
   guarded: ['id', 'user_id', 'created_at', 'updated_at'],
   table: {
     show: [],
@@ -30,7 +30,8 @@ export default {
     _action,
     {
       text: 'Spring Name',
-      value: 'spring.name'
+      value: 'spring.name',
+      width: '180px'
     },
     _userId,
     {
