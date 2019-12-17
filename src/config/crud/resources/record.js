@@ -5,7 +5,7 @@ import _createdAt from './fields/_createdAt'
 import _updatedAt from './fields/_updatedAt'
 export default {
   id: 'record',
-  url: '/records',
+  url: '/spring-records',
   primaryKey: 'id',
   title: 'Record',
   relatedModel: [],
@@ -28,6 +28,10 @@ export default {
   fields: [
     _id,
     _action,
+    {
+      text: 'Spring Name',
+      value: 'spring.name'
+    },
     _userId,
     {
       text: '',
@@ -36,6 +40,7 @@ export default {
       width: '',
       disabled: false
     },
+
     _createdAt,
     _updatedAt
   ]

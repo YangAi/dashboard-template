@@ -1,7 +1,18 @@
 <template>
   <v-card>
     <v-card-title>
-      {{ $t('datatable.all') }} {{ model.title }}
+<!--      {{ $t('datatable.all') }} {{ model.title }}-->
+      <v-text-field
+              v-model="searchInner"
+              prepend-icon="mdi-magnify"
+              :label="$t('actions.search')"
+              single-line
+              clearable
+              hide-details
+              dense
+              style="max-width: 300px"
+      ></v-text-field>
+      <v-spacer></v-spacer>
       <the-crud-panel-new-dialog :resource="resource" />
       <the-crud-panel-filter :resource="resource" :filters="filters" @updateFilters="updateFilters" />
       <v-btn fab small dark color="blue-grey" @click="$emit('refresh')" class="tw-mx-2">
@@ -10,15 +21,6 @@
       <v-btn fab small dark color="green" @click="$emit('export')" class="tw-mx-2">
         <v-icon>mdi-file-excel-outline</v-icon>
       </v-btn>
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="searchInner"
-        append-icon="mdi-magnify"
-        :label="$t('actions.search')"
-        single-line
-        hide-details
-        style="max-width: 300px"
-      ></v-text-field>
     </v-card-title>
   </v-card>
 </template>

@@ -101,11 +101,11 @@ export default {
           label: 'Records',
           children: [
             {
-              to: 'FinalSale.List',
+              to: 'Records.Index',
               label: 'All Records'
             },
             {
-              to: 'FinalSale.New',
+              to: 'Records.New',
               label: 'New Record'
             }
           ]

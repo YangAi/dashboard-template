@@ -6,7 +6,7 @@
         <the-crud-panel :resource="resource"
                         :filters="filters"
                         :search="search"
-                        class="tw-mb-8"
+                        class="tw-mb-4"
                         @updateFilters="updateFilters"
                         @updateSearch="updateSearch"
                         @refresh="loadIndex"
@@ -62,7 +62,7 @@
       </the-detail>
     </v-scroll-x-transition>
     <!--    fast update dialog start-->
-    <v-dialog v-if="canEdit" v-model="update.show" max-width="480">
+    <v-dialog v-if="canEdit" v-model="update.show" max-width="780">
       <v-card>
         <v-card-title class="headline">
           {{ $t('actions.update') + $crud[resource].title + ' - ' + update.form[$crud[resource].primaryKey] }}

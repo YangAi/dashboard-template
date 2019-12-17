@@ -2,6 +2,12 @@
   <div>
     <the-header @drawerHandle="drawerOpen = !drawerOpen" />
     <v-content>
+      <v-container fluid class="tw-pt-0">
+        <v-divider />
+      </v-container>
+      <v-container class="tw-pb-0">
+        <h1 class="headline">{{ $route.meta.title }}</h1>
+      </v-container>
       <router-view />
     </v-content>
     <the-drawer v-model="drawerOpen" />

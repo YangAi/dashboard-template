@@ -4,12 +4,12 @@
              app
              color="transparent"
              flat
-             height="88">
-    <v-btn icon @click.stop="onClick" class="md:tw-ml-2">
+             height="68">
+    <v-btn icon @click.stop="onClick">
       <v-icon>mdi-view-list</v-icon>
     </v-btn>
     <v-toolbar-title class="tertiary--text font-weight-light align-self-center">
-      {{ title || $route.meta.title || $t('app.header.title') }}
+      {{ title || $route.matched[0].meta.title || $route.meta.title || $t('app.header.title') }}
     </v-toolbar-title>
 
     <v-spacer />
@@ -17,9 +17,8 @@
     <v-toolbar-items>
       <v-row align="center"
              class="mx-0">
-        <v-text-field class="mr-4 purple-input"
-                      color="purple"
-                      label="Search..."
+        <v-text-field class="mr-4"
+                      :label="$t('actions.search') + '...'"
                       hide-details/>
 
         <v-btn icon

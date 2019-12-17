@@ -1,5 +1,5 @@
 export default {
   new: {
-    title: 'Add New'
+    title: 'Add New '
   }
 }

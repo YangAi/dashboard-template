@@ -1,6 +1,7 @@
 <template>
-    <v-container>
-        <v-card>
+    <v-container fluid>
+        <v-card style="max-width: 768px">
+            <v-card-title>{{ $t('forms.new.title') }} Springs</v-card-title>
             <v-card-text>
                 <the-crud-panel-new-form resource="spring" v-model="form" />
             </v-card-text>

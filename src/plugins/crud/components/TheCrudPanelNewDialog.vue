@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="480">
+  <v-dialog v-model="dialog" persistent max-width="780">
     <template v-slot:activator="{ on }">
       <slot name="activator" :on="on">
         <v-btn fab dark small color="blue" v-on="on" class="tw-mx-2">
@@ -8,7 +8,7 @@
       </slot>
     </template>
     <v-card>
-      <v-card-title class="headline">{{ $t('actions.add') + model.title }}</v-card-title>
+      <v-card-title class="headline">{{ $t('actions.add') }} {{ model.title }}</v-card-title>
       <v-card-text>
         <the-crud-panel-new-form v-model="form" :resource="resource" v-bind="$attrs" />
       </v-card-text>

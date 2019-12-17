@@ -7,7 +7,7 @@ import config from '@/config'
 const beforeEach = async (to, from, next) => {
   NProgress.start()
 
-  if (to.meta.auth === false) return next()
+  if (to.matched.some(m => m.meta.auth === false)) return next()
 
   await Auth.getToken()
 

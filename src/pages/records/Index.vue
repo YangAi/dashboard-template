@@ -1,6 +1,6 @@
 <template>
     <v-container>
-        <the-crud resource="spring">
+        <the-crud resource="record">
             <template v-slot:field.action.append="{ item }">
             </template>
             <template v-slot:detail.actions="{ detail }">
@@ -18,6 +18,6 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

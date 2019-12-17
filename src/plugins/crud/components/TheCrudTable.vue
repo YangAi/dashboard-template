@@ -1,11 +1,27 @@
 <template>
-  <v-data-table ref="table" :headers="headers" :items="list" v-bind="$attrs" :search="search" @current-items="currentItems">
-    <template v-for="(field) in fields" v-slot:[`item.${field.value}`]="{ item }">
-      <slot :name="`field.${field.value}`" :item="item">
-        <the-crud-table-field :field="field" :resource="resource" v-model="item" />
-      </slot>
-    </template>
-  </v-data-table>
+  <v-card>
+    <v-card-text>
+      <v-data-table ref="table" :headers="headers" :items="list" v-bind="$attrs" :search="search" @current-items="currentItems">
+        <template v-for="(field) in fields" v-slot:[`item.${field.value}`]="{ item }">
+          <slot :name="`field.${field.value}`" :item="item">
+            <the-crud-table-field :field="field" :resource="resource" v-model="item" />
+          </slot>
+        </template>
+        <template v-slot:no-data>
+          <slot name="table.no-data" />
+        </template>
+        <template v-slot:no-results>
+          <slot name="table.no-results" />
+        </template>
+        <template v-slot:header>
+          <slot name="table.header" />
+        </template>
+        <template v-slot:footer>
+          <slot name="table.footer" />
+        </template>
+      </v-data-table>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script>

@@ -1,33 +1,33 @@
 export default [
   {
-    path: '/springs',
+    path: '/records',
     component: () => import('@layouts/DefaultLayout'),
     meta: {
-      title: 'Springs'
+      title: 'Records'
     },
     children: [
       {
         path: 'list',
         component: () => import('./Index.vue'),
-        name: 'Springs.Index',
+        name: 'Records.Index',
         meta: {
-          title: 'All Springs'
+          title: 'All Records'
         }
       },
       {
         path: 'new',
         component: () => import('./New.vue'),
-        name: 'Springs.New',
+        name: 'Records.New',
         meta: {
-          title: 'New Spring'
+          title: 'New Record'
         }
       },
       {
         path: ':id',
         component: () => import('./_Id.vue'),
-        name: 'Springs.ById',
+        name: 'Records.ById',
         meta: {
-          title: 'Spring Detail'
+          title: 'Record Detail'
         }
       }
     ]

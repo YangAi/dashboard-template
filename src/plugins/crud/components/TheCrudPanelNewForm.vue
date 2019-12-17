@@ -1,9 +1,13 @@
 <template>
   <v-form ref="form">
-    <crud-input-field v-for="field in enabledFields"
-                      :key="field.value"
-                      :field="field"
-                      v-model="form[field.value]" />
+    <v-row>
+      <v-col cols="12" :md="['richtext', 'textarea'].includes(field.mode) ? 12 : 6" v-for="field in enabledFields"
+             :key="field.value">
+        <crud-input-field dense
+                          :field="field"
+                          v-model="form[field.value]" />
+      </v-col>
+    </v-row>
   </v-form>
 </template>
 
