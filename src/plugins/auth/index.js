@@ -10,15 +10,17 @@ import config from '@/config'
 
 export function loginCheck (payload) {
   if ((!payload.phone && !payload.email && !payload.account && !payload.username) || (!payload.password && !payload.code)) {
-    Vue.toast.error('please ')
+    Vue.$toast.error(config.messages.auth.error.required)
     return false
   }
 
   if (payload.email && !utils.isEmail(payload.email)) {
+    Vue.$toast.error(config.messages.auth.error.email)
     return false
   }
 
   if (payload.phone && !utils.isPhone(payload.phone)) {
+    Vue.$toast.error(config.messages.auth.error.phone)
     return false
   }
 
@@ -43,6 +45,7 @@ export function loginCheck (payload) {
   } else if (payload.code && utils.isCode(payload.code)) {
     params.code = payload.code
   } else {
+    Vue.$toast.error(config.messages.auth.error.password)
     return false
   }
 

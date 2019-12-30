@@ -8,14 +8,14 @@
         <v-container class="tw-mt-8 md:tw-mt-40 tw-p-8 lg:tw-pl-12">
           <h1 class="display-1 tw-mb-8">{{ $config.messages.login.title }}</h1>
           <v-form ref="form" style="max-width: 300px">
-            <v-text-field v-model="form.username" :label="$config.messages.login.label.username" :rules="[rules.isRequired]" />
+            <v-text-field v-model="form.username" :label="$config.messages.login.label.account" :rules="[rules.isRequired]" />
             <v-text-field v-model="form.password" :label="$config.messages.login.label.password"
                           :type="showPassword ? 'text' : 'password'"
                           :append-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
                           @click:append="showPassword = !showPassword"
                           :rules="[rules.isRequired]" />
           </v-form>
-          <v-btn elevation="0" @click.native="submit" color="primary" :loading="loading">{{ $config.messages.login.buttons.login }}</v-btn>
+          <v-btn elevation="0" @click="submit" color="primary" :loading="loading">{{ $config.messages.login.buttons.login }}</v-btn>
           <a href="https://igws.indiana.edu/" class="caption tw-absolute tw-bottom-0 tw-mb-4 tw-flex tw-items-center tw-text-gray-700">
             <v-icon small class="mr-2 tw-text-gray-700">mdi-arrow-left</v-icon> {{ $config.messages.login.buttons.goBack }}</a>
         </v-container>
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     async submit () {
-      if (!this.$refs.form.validate()) return this.$toast.error(this.$config.messages.login.wrong)
+      if (!this.$refs.form.validate()) this.$toast.error(this.$config.messages.login.wrong)
       this.loading = true
       try {
         const res = await this.$auth.login(this.form)

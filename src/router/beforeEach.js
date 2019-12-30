@@ -13,9 +13,10 @@ const beforeEach = async (to, from, next) => {
 
   // access control for dashboard
   if (process.env.VUE_APP_SOURCE === 'Dashboard') {
+    console.log(Auth.token)
     if (Auth.token && Auth.user) {
-      const hasRole = true
-      // await Auth.hasScope('is_admin')
+      // const hasRole = true
+      const hasRole = await Auth.hasScope('is_admin')
       if (!hasRole) {
         Vue.$toast.error(config.messages.router.noPermission)
         Auth.logout()
@@ -24,9 +25,8 @@ const beforeEach = async (to, from, next) => {
       return next()
     } else {
       Vue.$toast.error(config.messages.router.loginFirst)
+      return next({ name: 'Auth.Login' }) // redirect to login
     }
-
-    return next({ name: 'Auth.Login' }) // redirect to login
   }
 
   return next()

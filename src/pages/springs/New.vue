@@ -26,6 +26,9 @@ export default {
   methods: {
     async submit () {
       const res = await http.store(this.resource, this.form)
+      if (res) {
+        this.$toast.success('success')
+      }
     }
   }
 }

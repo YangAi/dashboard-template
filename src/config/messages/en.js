@@ -18,7 +18,9 @@ export default {
   auth: {
     error: {
       required: 'Please enter all the required field.',
-      phone: 'Please enter a valid phone number'
+      phone: 'Please enter a valid phone number.',
+      email: 'Please enter a valid email.',
+      password: 'Please enter a valid password.'
     },
     welcomeBack: 'Welcome Back!',
     logout: 'logout finished.'

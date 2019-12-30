@@ -16,6 +16,12 @@ export default {
     loginFirst: '请先完成登录。'
   },
   auth: {
+    error: {
+      required: '请输入账号和密码。',
+      phone: '请输入有效的手机号。',
+      email: '请输入有效的邮箱。',
+      password: '请输入有效的密码。'
+    },
     welcomeBack: '登录成功，欢迎回来。',
     logout: '退出成功!'
   },

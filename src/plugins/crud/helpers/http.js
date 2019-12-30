@@ -2,7 +2,7 @@ import Vue from 'vue'
 import helpers from './functions'
 import i18n from '@/locales'
 import api from '@/services/api'
-import models from '@/config/models'
+import models from '@/config/crud'
 export default {
   async index (resource, message = true) {
     try {
@@ -30,7 +30,9 @@ export default {
       const res = api[models[resource].id].update(form[models[resource].primaryKey], helpers.cleanFormBeforeSubmit(resource, form))
       if (message) Vue.$toast.success(i18n.t('messages.updated.success'))
       return res.data || res
-
+    } catch (e) {
+      if (message) Vue.$toast.error(i18n.t('messages.stored.error'))
+      console.log(e)
     }
   },
   async update (resource, form, message = true) {
