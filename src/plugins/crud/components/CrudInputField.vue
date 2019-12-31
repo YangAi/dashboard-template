@@ -1,15 +1,15 @@
 <template>
-  <component :is="componentName"
-             v-model="innerValue"
-             :field="field"
-             :label="field.text"
-             :prefix="field.prefix || ''"
-             :suffix="field.suffix || ''"
-             :hint="field.hint || ''"
-             :rules="field.rules || []"
-             :disabled="!!field.disabled && !forFilter"
-             v-bind="$attrs"
-              />
+    <component :is="componentName"
+               v-model="innerValue"
+               :field="field"
+               :label="field.text"
+               :prefix="field.prefix || ''"
+               :suffix="field.suffix || ''"
+               :hint="field.hint || ''"
+               :rules="field.rules || []"
+               :disabled="!!field.disabled && !forFilter"
+               v-bind="$attrs"
+    />
 </template>
 
 <script>
@@ -22,6 +22,7 @@ import SliderField from './inputFields/SliderField'
 import TextareaField from './inputFields/TextareaField'
 import TextField from './inputFields/TextField'
 import TimeField from './inputFields/TimeField'
+import PasswordField from './inputFields/PasswordField'
 import baseMixins from './inputFields/baseMixins'
 export default {
   name: 'CrudInputField',
@@ -31,7 +32,7 @@ export default {
       default: false
     }
   },
-  components: { TimeField, TextField, TextareaField, SliderField, SelectField, RichtextField, DatetimeField, DateField, CheckboxField },
+  components: { TimeField, TextField, TextareaField, SliderField, SelectField, RichtextField, DatetimeField, DateField, CheckboxField, PasswordField },
   mixins: [baseMixins],
   computed: {
     formattedType () {
