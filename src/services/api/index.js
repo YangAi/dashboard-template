@@ -10,7 +10,7 @@ let resource = {
 
 forEach(crud, (item) => {
   if (!item.subModel) {
-    resource[item.id] = new Resource('/' + item.url)
+    resource[item.id] = new Resource(item.url)
   }
 })
 
