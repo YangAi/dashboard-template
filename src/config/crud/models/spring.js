@@ -28,64 +28,64 @@ export default {
     _id,
     _action,
     {
-      text: 'Name',
+      label: 'Name',
       value: 'name'
     },
     {
-      text: 'Alternate Name',
+      label: 'Alternate Name',
       value: 'alternate_name'
     },
     {
-      text: 'REF',
+      label: 'REF',
       value: 'red'
     },
     {
-      text: 'Latitude',
+      label: 'Latitude',
       value: 'latitude',
       type: 'number'
     },
     {
-      text: 'Longitude',
+      label: 'Longitude',
       value: 'longitude',
       type: 'number'
     },
     {
-      text: 'County',
+      label: 'County',
       value: 'county'
     },
     {
-      text: 'Quad',
+      label: 'Quad',
       value: 'quad'
     },
     {
-      text: 'Is Cave',
+      label: 'Is Cave',
       value: 'is_cave',
       type: 'checkbox'
     },
     {
-      text: 'Cave Length',
+      label: 'Cave Length',
       value: 'cave_length',
       type: 'number'
     },
     {
-      text: 'Is Private',
+      label: 'Is Private',
       value: 'is_private',
       type: 'checkbox'
     },
     {
-      text: 'Owner Name',
+      label: 'Owner Name',
       value: 'owner_name'
     },
     {
-      text: 'Owner Email',
+      label: 'Owner Email',
       value: 'owner_email'
     },
     {
-      text: 'Owner Phone',
+      label: 'Owner Phone',
       value: 'owner phone'
     },
     {
-      text: 'Status',
+      label: 'Status',
       value: 'status',
       type: 'select',
       disabled: true

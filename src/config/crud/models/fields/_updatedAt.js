@@ -1,5 +1,5 @@
 export default {
-  text: 'Updated At',
+  label: 'Updated At',
   value: 'updated_at',
   type: 'datetime'
 }

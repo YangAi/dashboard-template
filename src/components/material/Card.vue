@@ -100,7 +100,7 @@ export default {
       return this.$slots.header ||
           this.$slots.offset ||
           this.title ||
-          this.text
+          this.label
     },
     styles () {
       if (!this.hasOffset) return null

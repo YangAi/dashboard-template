@@ -40,8 +40,8 @@ export default {
       let name = false
       if (this.model) {
         const field = this._.find(this.model.fields, { value: key })
-        if (field && field.text) {
-          name = field.text
+        if (field && field.label) {
+          name = field.label
         }
       }
       return name || this._.capitalize(this._.lowerCase(key))

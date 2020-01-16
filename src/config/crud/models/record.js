@@ -29,13 +29,13 @@ export default {
     _id,
     _action,
     {
-      text: 'Spring Name',
+      label: 'Spring Name',
       value: 'spring.name',
       width: '180px'
     },
     _userId,
     {
-      text: '',
+      label: '',
       value: '',
       type: '',
       width: '',

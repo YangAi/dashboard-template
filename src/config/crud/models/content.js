@@ -6,7 +6,7 @@ export default {
   title: '正文',
   fields: [
     {
-      text: '正文',
+      label: '正文',
       value: 'body',
       type: 'html'
     }

@@ -1,5 +1,5 @@
 export default {
-  text: 'ID',
+  label: 'ID',
   value: 'id',
   type: 'number',
   width: '60px',

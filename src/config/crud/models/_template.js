@@ -30,7 +30,7 @@ export default {
     _action,
     _userId,
     {
-      text: '',
+      label: '',
       value: '',
       type: '',
       width: '',
