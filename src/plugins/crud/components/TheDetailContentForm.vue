@@ -1,18 +1,18 @@
 <template>
-  <v-card>
+  <section class="crud-detail-content-form">
     <v-card-text>
       <the-crud-panel-new-form v-model="form" :resource="resource" />
     </v-card-text>
     <v-card-actions>
       <v-btn @click="submit">{{ $t('actions.submit') }}</v-btn>
     </v-card-actions>
-  </v-card>
+  </section>
 </template>
 
 <script>
 import baseCrud from '../mixins/baseCrud'
 import availableFields from '../mixins/availableFields'
-import TheCrudPanelNewForm from './TheCrudPanelNewForm'
+import TheCrudPanelNewForm from './TheNewForm'
 import http from '../helpers/http'
 export default {
   name: 'TheDetailContentForm',

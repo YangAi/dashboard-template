@@ -1,7 +1,7 @@
 <template>
     <v-container>
         <v-card>
-            <the-detail page :id="$route.params.id" resource="spring" />
+            <the-detail full-page :id="$route.params.id" resource="spring" />
         </v-card>
     </v-container>
 </template>

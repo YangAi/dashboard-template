@@ -25,7 +25,7 @@ const components = {
   PasswordField
 }
 
-export default Vue.component('testComponent', {
+export default Vue.component('CrudInputField', {
   mixins: [baseMixins],
   props: {
     forFilter: {

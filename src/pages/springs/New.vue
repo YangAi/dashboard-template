@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TheCrudPanelNewForm from '../../plugins/crud/components/TheCrudPanelNewForm'
+import TheCrudPanelNewForm from '../../plugins/crud/components/TheNewForm'
 import http from '../../plugins/crud/helpers/http'
 export default {
   name: 'New',

@@ -1,15 +1,15 @@
 <template>
-  <nested-detail-card :detail="detail" :resource="resource" />
+  <nested-detail-info :detail="detail" :resource="resource" />
 </template>
 
 <script>
-import NestedDetailCard from './NestedDetailCard'
+import NestedDetailInfo from './NestedDetailInfo'
 import baseCrud from '../mixins/baseCrud'
 
 export default {
   name: 'TheDetailContentReadOnly',
   mixins: [baseCrud],
-  components: { NestedDetailCard },
+  components: { NestedDetailInfo },
   props: {
     value: {
       type: Object

@@ -1,58 +1,61 @@
 <template>
   <div class="the-crud tw-relative">
     <v-scroll-x-transition hide-on-leave>
-      <div class="the-crud-table" v-show="_.isNull(detail.id)" key="table">
+      <div class="the-crud-table" v-if="_.isNull(detail.id)" key="table">
         <!--    panel start  -->
-        <the-crud-panel :resource="resource"
-                        :filters="filters"
-                        :search="search"
-                        class="tw-mb-4"
-                        @updateFilters="updateFilters"
-                        @updateSearch="updateSearch"
-                        @refresh="loadIndex"
-                        @export="exportToExcel"/>
+        <v-card flat>
+          <the-crud-panel :resource="resource"
+                          :filters="filters"
+                          :search="search"
+                          class="tw-mb-4"
+                          @updateFilters="updateFilters"
+                          @updateSearch="updateSearch"
+                          @refresh="loadIndex"
+                          @export="exportToExcel"/>
+        </v-card>
         <!--    panel end-->
         <!--    table start-->
-        <the-crud-table
-          :resource="resource"
-          :list="list"
-          :loading="loading"
-          v-bind="$attrs"
-          :search="search"
-          :filters="filters"
-          @current-items="setCurrentItems">
-          <!-- slots for fields -->
-          <template v-for="field in fields" v-slot:[`field.${field.value}`]="{ item }">
-            <the-crud-table-field-action v-if="field.value === 'action'"
-                                         :key="field.value"
-                                         :item="item"
-                                         :canEdit="canEdit"
-                                         :canDelete="canDelete"
-                                         @update="updateHandle"
-                                         @view="viewDetailHandle"
-                                         @delete="deleteItem">
-              <template v-slot:field.action.prepend>
-                <slot name="field.action.prepend" :item="item" />
-              </template>
-              <template v-slot:field.action.append>
-                <slot name="field.action.append" :item="item" />
-              </template>
-            </the-crud-table-field-action>
-            <slot :name="`field.${field.value}`" :field="field" :item="item" />
-          </template>
-        </the-crud-table>
+        <v-card flat>
+          <the-crud-table
+              :resource="resource"
+              :list="list"
+              :loading="loading"
+              v-bind="$attrs"
+              :search="search"
+              :filters="filters"
+              @current-items="setCurrentItems">
+            <!-- slots for fields -->
+            <template v-for="field in fields" v-slot:[`field.${field.value}`]="{ item }">
+              <the-crud-table-field-action v-if="field.value === 'action'"
+                                           :key="field.value"
+                                           :item="item"
+                                           :canEdit="canEdit"
+                                           :canDelete="canDelete"
+                                           @update="updateHandle"
+                                           @view="viewDetailHandle"
+                                           @delete="deleteItem">
+                <template v-slot:field.action.prepend>
+                  <slot name="field.action.prepend" :item="item" />
+                </template>
+                <template v-slot:field.action.append>
+                  <slot name="field.action.append" :item="item" />
+                </template>
+              </the-crud-table-field-action>
+              <slot :name="`field.${field.value}`" :field="field" :item="item" />
+            </template>
+          </the-crud-table>
+        </v-card>
         <!--    table end-->
       </div>
-    </v-scroll-x-transition>
-    <v-scroll-x-transition hide-on-leave>
-      <the-detail v-if="canViewDetail"
-                  v-show="detail.id"
-                  :id="detail.id"
-                  :resource="resource"
-                  key="detail"
-                  :idList="filteredId"
-                  @shift="shiftDetail"
-                  @close="closeDetail">
+      <the-detail  v-else-if="canViewDetail && detail.id >= 0"
+                   :id="detail.id"
+                   :resource="resource"
+                   :idList="filteredId"
+                   @shift="shiftDetail"
+                   @close="closeDetail">
+        <template v-slot:detail.title="{ detail }">
+          <slot name="detail.title" :detail="detail" />
+        </template>
         <template v-slot:detail.actions="{ detail }">
           <slot name="detail.actions" :detail="detail" />
         </template>
@@ -86,7 +89,7 @@ import TheCrudTable from './TheCrudTable'
 import TheCrudPanel from './TheCrudPanel'
 import TheCrudTableFieldAction from './TheCrudTableFieldAction'
 import TheDetail from './TheDetail'
-import TheCrudPanelNewForm from './TheCrudPanelNewForm'
+import TheCrudPanelNewForm from './TheNewForm'
 import baseCrud from '../mixins/baseCrud'
 import availableFields from '../mixins/availableFields'
 import http from '../helpers/http'

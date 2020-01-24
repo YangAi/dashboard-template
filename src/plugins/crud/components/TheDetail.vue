@@ -1,33 +1,51 @@
 <template>
   <div class="the-detail">
-    <v-card-title>
-<!--      TODO i18n-->
-      {{ $crud[resource].title }} - {{ detail[$crud[resource].primaryKey] }}
-      <v-spacer />
-      <template v-if="!_.isEmpty(idList)">
-        <v-btn icon :loading="loading" @click="shiftDetail('prev')">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-btn icon :loading="loading" @click="shiftDetail('next')">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </template>
-      <v-btn v-if="!page" icon @click="$emit('close')">
-        <v-icon>mdi-close</v-icon>
-      </v-btn>
-    </v-card-title>
-    <v-card-text>
-      <slot name="detail.actions" :detail="detail" />
-      <v-switch v-model="canHotEdit" :label="$t('detail.liveEdit')" />
-    </v-card-text>
-    <v-tabs v-model="activeTab">
+    <v-card flat>
+      <v-card-title>
+        <template v-if="loading">
+          <v-skeleton-loader type="table-heading" class="tw-w-full" />
+        </template>
+        <template v-else>
+          <slot name="detail.title" :detail="detail">
+            {{ $crud[resource].title }} - {{ detail[$crud[resource].primaryKey] }}
+          </slot>
+          <v-spacer />
+          <template v-if="!_.isEmpty(idList)">
+            <v-btn icon :loading="loading" @click="shiftDetail('prev')">
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-btn icon :loading="loading" @click="shiftDetail('next')">
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-btn>
+          </template>
+          <v-btn v-if="!fullPage" icon @click="$emit('close')">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </template>
+      </v-card-title>
+<!--      <v-container>-->
+<!--        <v-divider />-->
+<!--      </v-container>-->
+      <v-card-text>
+        <template v-if="loading">
+          <v-skeleton-loader type="list-item-two-line" />
+        </template>
+        <template v-else>
+          <div class="tw-flex tw-items-center">
+            <slot name="detail.actions" :detail="detail" />
+            <v-switch hide-details v-model="canLiveEdit" :label="$t('detail.liveEdit')" class="tw-mt-0" />
+          </div>
+        </template>
+      </v-card-text>
+    </v-card>
+    <v-tabs v-model="activeTab" background-color="transparent" class="tw-mt-4">
       <v-tab href="#main">{{ $t('detail.main') }}</v-tab>
       <v-tab v-for="tab in tabs" :key="tab.key" :href="`#${tab.key}`">{{ $t('detail.related')}} {{ tab.model.title }}</v-tab>
     </v-tabs>
     <v-tabs-items v-model="activeTab">
       <v-tab-item value="main">
         <v-container>
-          <component :is="canHotEdit ? 'the-detail-content-form' : 'the-detail-content-read-only'" :resource="resource" v-model="detail" />
+          <component :is="canLiveEdit ? 'the-detail-content-form' : 'the-detail-content-read-only'" :resource="resource" v-model="detail" />
         </v-container>
       </v-tab-item>
       <v-tab-item v-for="tab in tabs" :key="tab.key" :value="tab.key">
@@ -52,10 +70,6 @@ export default {
   mixins: [baseCrud],
   components: { TheDetailContentTable, TheDetailContentForm, TheDetailContentReadOnly },
   props: {
-    resource: {
-      type: String,
-      required: true
-    },
     id: {
       type: [String, Number]
     },
@@ -63,7 +77,7 @@ export default {
       type: [Array, Boolean],
       default: () => []
     },
-    page: {
+    fullPage: {
       type: Boolean,
       default: false
     }
@@ -100,7 +114,7 @@ export default {
       activeIndex: null,
       loading: false,
       detail: {},
-      canHotEdit: false
+      canLiveEdit: false
     }
   },
   watch: {
@@ -110,13 +124,16 @@ export default {
   },
   methods: {
     async loadItem () {
-      console.log('start')
       if (!this.id) return
       this.loading = true
-      const res = http.find(this.resource, this.id, this.$crud[this.resource].relatedModel)
-      if (res) {
-        this.detail = res
-        if (!this._.isEmpty(this.idList)) this.activeIndex = this.idList.indexOf(this.id)
+      try {
+        const res = await http.find(this.resource, this.id, this.$crud[this.resource].relatedModel)
+        if (res) {
+          this.detail = res.data
+          if (!this._.isEmpty(this.idList)) this.activeIndex = this.idList.indexOf(this.id)
+        }
+      } catch (e) {
+        console.log(e)
       }
       this.loading = false
     },

@@ -4,6 +4,10 @@
 
 @import "./tailwind.css";
 
+@import "./_vuetify.scss";
+
+@import "./_style.scss";
+
 th {
   white-space: nowrap;
 }

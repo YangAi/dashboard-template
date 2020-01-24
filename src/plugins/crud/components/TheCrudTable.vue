@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <section class="crud-table">
     <v-card-text>
       <v-data-table ref="table"
                     :headers="headers"
@@ -25,7 +25,7 @@
         </template>
       </v-data-table>
     </v-card-text>
-  </v-card>
+  </section>
 </template>
 
 <script>

@@ -9,18 +9,15 @@
       <v-list-item v-for="(item, index) in fieldsAvailable" :key="index">
         <v-row no-gutters>
           <v-col v-if="['boolean', 'checkbox'].includes(item.type)" :col="12">
-            <v-select v-model="filters[item.value].mode" :items="filterModes.checkbox" item-text="text" item-value="value" hide-details></v-select>
+            <v-select v-model="filters[item.value].mode" :items="filterModes.checkbox" item-text="text" item-value="value" hide-details />
           </v-col>
           <v-col v-else :col="6">
-            <v-select v-model="filters[item.value].mode" :items="numberType.includes(item.type) ? filterModes.number : filterModes.normal" item-text="text" item-value="value" hide-details></v-select>
+            <v-select v-model="filters[item.value].mode" :items="numberType.includes(item.type) ? filterModes.number : filterModes.normal" item-text="text" item-value="value" hide-details />
           </v-col>
           <v-col :col="6">
             <crud-input-field v-model="filters[item.value].value" :field="item" for-filter hide-details />
           </v-col>
         </v-row>
-        <template v-if="item.type === 'datetime'"></template>
-        <template v-else>
-        </template>
       </v-list-item>
     </v-list>
   </v-menu>

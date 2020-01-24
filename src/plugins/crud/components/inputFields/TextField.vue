@@ -1,5 +1,6 @@
 <template>
-  <v-text-field v-bind="$attrs"
+  <v-text-field filled dense
+                v-bind="$attrs"
                 :field="field"
                 :type="['number', 'decimal', 'integer'].includes(field.type) ? 'number' : 'text'"
                 :step="field.type === 'decimal' ? 0.01 : 1"
