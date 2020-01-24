@@ -3,7 +3,7 @@ import vuex from './vuex/index.js'
 import api from '@/services/api'
 import router from '@/router'
 import localforage from 'localforage'
-import { isEmpty, trim, replace, forEach, concat, uniqBy } from 'lodash'
+import { isEmpty, trim, replace, forEach, concat, uniqBy, find } from 'lodash'
 import utils from '@utils/client'
 import { setToken as setAjaxToken } from '@/plugins/http'
 import config from '@/config'
@@ -80,11 +80,11 @@ export default {
     }
   },
   async logout () {
+    await this.removeToken()
+    Vue.$toast.success(i18n.t('messages.auth.logout'))
+    await router.push('/')
     let res = await api[config.authResource].destroy('')
     if (res) {
-      await this.removeToken()
-      Vue.$toast.success(i18n.t('messages.auth.logout'))
-      await router.push('/')
       return res
     }
   },

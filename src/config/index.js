@@ -1,5 +1,3 @@
-import messages from './messages'
-
 export default {
   inputFormat: {
     date: 'YYYY-MM-DD',

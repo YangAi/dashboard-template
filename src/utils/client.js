@@ -1,5 +1,5 @@
 import _ from 'lodash'
-import qs from 'qs'
+import api from '@api'
 
 export default {
   get isOffline () {

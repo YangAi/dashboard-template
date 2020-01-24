@@ -4,6 +4,7 @@ import forms from './forms'
 import app from './app'
 import datatable from './datatable'
 import detail from './detail'
+import login from './login'
 
 export default {
   actions,
@@ -11,5 +12,6 @@ export default {
   forms,
   app,
   datatable,
-  detail
+  detail,
+  login
 }

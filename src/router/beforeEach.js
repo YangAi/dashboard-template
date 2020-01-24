@@ -16,10 +16,15 @@ const beforeEach = async (to, from, next) => {
     if (to.meta.auth === false) return next()
 
     await Auth.getToken()
-
+    let hasRole
     if (Auth.token && Auth.user) {
-      const hasRole = await Auth.hasRole(['super admin'])
+      try {
+        hasRole = await Auth.hasRole(['super admin'])
+      } catch (e) {
+        hasRole = false
+      }
       if (!hasRole) {
+        console.log('has role false')
         Vue.$toast.error(i18n.t('messages.router.noPermission'))
         await Auth.logout()
         return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
