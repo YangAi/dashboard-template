@@ -18,7 +18,7 @@ const beforeEach = async (to, from, next) => {
     await Auth.getToken()
 
     if (Auth.token && Auth.user) {
-      const hasRole = await Auth.hasRole(['super admin', 'yo'])
+      const hasRole = await Auth.hasRole(['super admin'])
       if (!hasRole) {
         Vue.$toast.error(i18n.t('messages.router.noPermission'))
         await Auth.logout()
@@ -38,7 +38,6 @@ const beforeEach = async (to, from, next) => {
       return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
     }
   }
-
 }
 
 export default beforeEach
