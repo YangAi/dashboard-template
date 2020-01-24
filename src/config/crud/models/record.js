@@ -11,8 +11,8 @@ export default {
   relatedModel: ['spring'],
   guarded: ['id', 'user_id', 'created_at', 'updated_at'],
   table: {
-    show: [],
-    hide: ['img'],
+    show: ['id', 'spring.name'],
+    hide: ['user_id'],
     liveEdit: []
   },
   form: {
@@ -31,14 +31,14 @@ export default {
     {
       text: 'Spring Name',
       value: 'spring.name',
-      width: '180px'
+      width: '180px',
+      disabled: false
     },
     _userId,
     {
-      text: '',
-      value: '',
-      type: '',
-      width: '',
+      text: 'Data Amount',
+      value: 'data_count',
+      type: 'number',
       disabled: false
     },
 

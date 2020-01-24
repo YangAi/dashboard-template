@@ -1,18 +1,6 @@
-<template>
-    <component :is="componentName"
-               v-model="innerValue"
-               :field="field"
-               :label="field.text"
-               :prefix="field.prefix || ''"
-               :suffix="field.suffix || ''"
-               :hint="field.hint || ''"
-               :rules="field.rules || []"
-               :disabled="!!field.disabled && !forFilter"
-               v-bind="$attrs"
-    />
-</template>
-
-<script>
+/* eslint-disable no-unused-vars */
+import Vue from 'vue'
+import baseMixins from './inputFields/baseMixins'
 import CheckboxField from './inputFields/CheckboxField'
 import DateField from './inputFields/DateField'
 import DatetimeField from './inputFields/DatetimeField'
@@ -23,17 +11,28 @@ import TextareaField from './inputFields/TextareaField'
 import TextField from './inputFields/TextField'
 import TimeField from './inputFields/TimeField'
 import PasswordField from './inputFields/PasswordField'
-import baseMixins from './inputFields/baseMixins'
-export default {
-  name: 'CrudInputField',
+
+const components = {
+  CheckboxField,
+  DateField,
+  DatetimeField,
+  RichtextField,
+  SelectField,
+  SliderField,
+  TextareaField,
+  TextField,
+  TimeField,
+  PasswordField
+}
+
+export default Vue.component('testComponent', {
+  mixins: [baseMixins],
   props: {
     forFilter: {
       type: Boolean,
       default: false
     }
   },
-  components: { TimeField, TextField, TextareaField, SliderField, SelectField, RichtextField, DatetimeField, DateField, CheckboxField, PasswordField },
-  mixins: [baseMixins],
   computed: {
     formattedType () {
       return this._.toLower(this.field.type)
@@ -42,25 +41,38 @@ export default {
       // only for filter
       if (this.forFilter) {
         if (['checkbox', 'date', 'datetime', 'select', 'time'].includes(this.formattedType)) {
-          return this.formattedType + '-field'
+          return this._.capitalize(this.formattedType) + 'Field'
         }
-        return 'text-field'
+        return 'TextField'
       }
       if (['checkbox', 'date', 'datetime', 'richtext', 'select', 'slider', 'textarea', 'time'].includes(this.formattedType)) {
-        return this.formattedType + '-field'
+        return this._.capitalize(this.formattedType) + 'Field'
       }
       if (this.formattedType === 'boolean') {
-        return 'checkbox-field'
+        return 'CheckboxField'
       }
       if (this.formattedType === 'html') {
-        return 'richtext-field'
+        return 'RichtextField'
       }
-      return 'text-field'
+      return 'TextField'
     }
+  },
+  render (h) {
+    const self = this
+    return h(components[this.componentName], {
+      mixins: [baseMixins],
+      on: {
+        input: function (val) {
+          self.$emit('input', val)
+        }
+      },
+      attrs: {
+        ...this.field,
+        label: this.field.text,
+        ...this.$attrs,
+        field: this.field,
+        value: this.innerValue
+      }
+    })
   }
-}
-</script>
-
-<style lang="scss" scoped>
-
-</style>
+})
