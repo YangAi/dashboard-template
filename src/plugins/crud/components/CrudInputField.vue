@@ -2,7 +2,7 @@
     <component :is="componentName"
                v-model="innerValue"
                :field="field"
-               :label="field.label"
+               :label="field.text"
                :prefix="field.prefix || ''"
                :suffix="field.suffix || ''"
                :hint="field.hint || ''"

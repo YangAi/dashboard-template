@@ -2,7 +2,7 @@
   <base-text-field v-if="this.fields.type !== 'datetime'"
                 v-bind="$attrs"
                 v-model="innerValue"
-                :label="fields.label"
+                :label="fields.text"
                 :prefix="fields.prefix || ''"
                 :suffix="fields.suffix || ''"
                 :hint="fields.hint || ''"

@@ -22,50 +22,50 @@ export default {
   },
   fields: [
     {
-      label: 'ID',
+      text: 'ID',
       value: 'id',
       type: 'number',
       width: '90px',
       disabled: true
     },
     {
-      label: '行动',
+      text: '行动',
       value: 'action',
       disabled: true,
       width: '140px'
     },
     {
-      label: '标题',
+      text: '标题',
       value: 'title',
       type: 'string',
       width: '200px'
     },
     {
-      label: '活动地点',
+      text: '活动地点',
       value: 'location'
     },
     {
-      label: '开始时间',
+      text: '开始时间',
       value: 'start_at',
       type: 'datetime'
     },
     {
-      label: '结束时间',
+      text: '结束时间',
       value: 'end_at',
       type: 'datetime'
     },
     {
-      label: '创建时间',
+      text: '创建时间',
       value: 'created_at',
       type: 'datetime'
     },
     {
-      label: '内容',
+      text: '内容',
       value: 'checkbox',
       type: 'checkbox'
     },
     {
-      label: '内容',
+      text: '内容',
       value: 'slider',
       type: 'slider'
     }

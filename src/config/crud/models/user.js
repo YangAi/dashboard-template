@@ -6,11 +6,11 @@ export default {
   relatedModel: ['order'],
   fields: [
     {
-      label: '用户昵称',
+      text: '用户昵称',
       value: 'nick_name'
     },
     {
-      label: '管理员',
+      text: '管理员',
       value: 'is_admin',
       type: 'boolean'
     }

@@ -1,5 +1,5 @@
 export default {
-  label: 'Action',
+  text: 'Action',
   value: 'action',
   disabled: true,
   width: '140px',

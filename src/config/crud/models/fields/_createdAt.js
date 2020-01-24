@@ -1,5 +1,5 @@
 export default {
-  label: 'Created At',
+  text: 'Created At',
   value: 'created_at',
   type: 'datetime'
 }

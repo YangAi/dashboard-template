@@ -1,7 +1,11 @@
 <template>
   <v-card>
     <v-card-text>
-      <v-data-table ref="table" :headers="headers" :items="list" v-bind="$attrs" :search="search" @current-items="currentItems">
+      <v-data-table ref="table"
+                    :headers="headers"
+                    :items="list"
+                    item-key="label"
+                    v-bind="$attrs" :search="search" @current-items="currentItems">
         <template v-for="(field) in fields" v-slot:[`item.${field.value}`]="{ item }">
           <slot :name="`field.${field.value}`" :item="item">
             <the-crud-table-field :field="field" :resource="resource" v-model="item" />

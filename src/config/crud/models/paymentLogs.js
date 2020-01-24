@@ -6,22 +6,22 @@ export default {
   relatedModel: ['order'],
   fields: [
     {
-      label: 'ID',
+      text: 'ID',
       value: 'id',
       type: 'number',
       disabled: true
     },
     {
-      label: '行动',
+      text: '行动',
       value: 'action',
       disabled: true
     },
     {
-      label: '描述',
+      text: '描述',
       value: 'type'
     },
     {
-      label: '用户ID',
+      text: '用户ID',
       value: 'user_id'
     }
   ]
