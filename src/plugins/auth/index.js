@@ -9,6 +9,7 @@ import { setToken as setAjaxToken } from '@/plugins/http'
 import config from '@/config'
 
 export function loginCheck (payload) {
+
   if ((!payload.phone && !payload.email && !payload.account && !payload.username) || (!payload.password && !payload.code)) {
     Vue.$toast.error(config.messages.auth.error.required)
     return false
