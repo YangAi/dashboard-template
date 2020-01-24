@@ -11,7 +11,17 @@
                           @updateFilters="updateFilters"
                           @updateSearch="updateSearch"
                           @refresh="loadIndex"
-                          @export="exportToExcel"/>
+                          @export="exportToExcel">
+            <template v-slot:panel.actions>
+              <slot name="panel.actions" />
+            </template>
+            <template v-slot:new.dialog.title>
+              <slot name="new.dialog.title" />
+            </template>
+            <template v-for="field in getAvailableFields('form')" v-slot:[`new.form.${field.value}`]="{ field }">
+              <slot :name="`new.form.${field.value}`" :field="field" />
+            </template>
+          </the-crud-panel>
         </v-card>
         <!--    panel end-->
         <!--    table start-->
@@ -116,13 +126,15 @@ export default {
     this.loadIndex()
   },
   computed: {
+    fields () {
+      return this.getAvailableFields('table')
+    },
     filteredId () {
       return this._.map(this.currentItems, 'id')
     }
   },
   data () {
     return {
-      componentType: 'table',
       loading: true,
       search: '',
       filters: {},
@@ -184,7 +196,8 @@ export default {
       if (res) {
         const index = this._.findIndex(this.list, [this.model.primaryKey, this.update.form[this.model.primaryKey]])
         const list = this._.cloneDeep(this.list)
-        list[index] = this.update.form
+        list[index] = res.data
+        console.log(list[index], list[index].updated_at)
         this.list = list
         this.update.show = false
       }

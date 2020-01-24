@@ -8,12 +8,20 @@
       </slot>
     </template>
     <v-card>
-      <v-card-title class="headline tw-py-8">{{ $t('actions.add') }} {{ model.title }}</v-card-title>
+      <v-card-title class="headline tw-py-8">
+        <slot name="new.dialog.title">
+          {{ $t('actions.add') }} {{ model.title }}
+        </slot>
+      </v-card-title>
       <v-container class="tw-mb-4 tw-pt-0">
         <v-divider />
       </v-container>
       <v-card-text>
-        <the-crud-panel-new-form v-model="form" :resource="resource" v-bind="$attrs" />
+        <the-crud-panel-new-form v-model="form" :resource="resource" v-bind="$attrs">
+          <template v-for="field in fields" v-slot:[`new.form.${field.value}`]="{ field }">
+            <slot :name="`new.form.${field.value}`" :field="field" />
+          </template>
+        </the-crud-panel-new-form>
       </v-card-text>
       <v-card-actions>
         <v-spacer />
@@ -27,10 +35,16 @@
 <script>
 import TheCrudPanelNewForm from './TheNewForm'
 import baseCrud from '../mixins/baseCrud'
+import availableFields from '../mixins/availableFields'
 export default {
   name: 'TheCrudPanelNewDialog',
-  mixins: [baseCrud],
+  mixins: [baseCrud, availableFields],
   components: { TheCrudPanelNewForm },
+  computed: {
+    fields () {
+      return this.getAvailableFields('form')
+    }
+  },
   data () {
     return {
       dialog: false,

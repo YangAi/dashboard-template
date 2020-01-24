@@ -11,8 +11,8 @@ export default {
   relatedModel: ['spring'],
   guarded: ['id', 'user_id', 'created_at', 'updated_at'],
   table: {
-    show: ['id', 'spring.name'],
-    hide: ['user_id'],
+    show: [],
+    hide: [],
     liveEdit: []
   },
   form: {

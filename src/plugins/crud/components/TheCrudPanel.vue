@@ -14,7 +14,15 @@
           style="max-width: 300px" />
       <v-spacer />
       <div class="actions">
-        <the-crud-panel-new-dialog :resource="resource" />
+        <slot name="panel.actions" />
+        <the-crud-panel-new-dialog :resource="resource">
+          <template v-slot:new.dialog.title>
+            <slot name="new.dialog.title" />
+          </template>
+          <template v-for="field in getAvailableFields('form')" v-slot:[`new.form.${field.value}`]="{ field }">
+            <slot :name="`new.form.${field.value}`" :field="field" />
+          </template>
+        </the-crud-panel-new-dialog>
         <the-crud-panel-filter :resource="resource" :filters="filters" @updateFilters="updateFilters" />
         <v-btn fab small dark color="blue-grey" @click="$emit('refresh')">
           <v-icon>mdi-refresh</v-icon>
@@ -31,9 +39,10 @@
 import TheCrudPanelFilter from './TheCrudPanelFilter'
 import TheCrudPanelNewDialog from './TheNewDialog'
 import baseCrud from '../mixins/baseCrud'
+import availableFields from '../mixins/availableFields'
 export default {
   name: 'TheCrudPanel',
-  mixins: [baseCrud],
+  mixins: [baseCrud, availableFields],
   components: { TheCrudPanelNewDialog, TheCrudPanelFilter },
   props: {
     search: {

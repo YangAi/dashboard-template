@@ -11,21 +11,15 @@
 
 <script>
 import baseCrud from '../mixins/baseCrud'
-import availableFields from '../mixins/availableFields'
 import TheCrudPanelNewForm from './TheNewForm'
 import http from '../helpers/http'
 export default {
   name: 'TheDetailContentForm',
   components: { TheCrudPanelNewForm },
-  mixins: [baseCrud, availableFields],
+  mixins: [baseCrud],
   props: {
     value: {
       type: Object
-    }
-  },
-  data () {
-    return {
-      componentType: 'form'
     }
   },
   computed: {

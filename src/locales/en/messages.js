@@ -47,5 +47,7 @@ export default {
     success: 'success！',
     error: 'error！'
   },
-  confirm: 'Are you sure？'
+  confirm: 'Are you sure？',
+  firstData: 'This is the first data.',
+  lastData: 'This is the last data.'
 }

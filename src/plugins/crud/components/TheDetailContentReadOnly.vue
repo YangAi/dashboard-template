@@ -24,11 +24,6 @@ export default {
         return this.$emit('input', val)
       }
     }
-  },
-  data () {
-    return {
-      componentType: 'detail'
-    }
   }
 }
 </script>

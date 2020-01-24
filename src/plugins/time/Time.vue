@@ -56,6 +56,11 @@ export default {
       date: ''
     }
   },
+  watch: {
+    time () {
+      return this.setTime()
+    }
+  },
   methods: {
     setTime () {
       const type = typeof this.time

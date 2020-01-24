@@ -39,8 +39,10 @@ export default {
   methods: {
     async save () {
       const res = await http.update(this.resource, this.innerValue)
+      console.log('res', res.data)
+      console.log('innerValue', this.innerValue)
       if (res) {
-        this.innerValue = res
+        this.innerValue = res.data
       }
     },
     cancel () {

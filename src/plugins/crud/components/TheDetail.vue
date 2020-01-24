@@ -109,7 +109,6 @@ export default {
   },
   data () {
     return {
-      componentType: 'detail',
       activeTab: 'main',
       activeIndex: null,
       loading: false,
@@ -144,7 +143,7 @@ export default {
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
           // TODO 加上i8n
-          this.$toast.warning('已经第一条')
+          this.$toast.warning(this.$t('messages.firstData'))
         }
       }
       if (action === 'next') {
@@ -153,7 +152,7 @@ export default {
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
           // TODO 加上i8n
-          this.$toast.warning('已经最后一条')
+          this.$toast.warning(this.$t('messages.lastData'))
         }
       }
     },

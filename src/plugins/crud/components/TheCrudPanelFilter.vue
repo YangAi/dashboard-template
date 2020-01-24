@@ -38,7 +38,7 @@ export default {
   },
   computed: {
     fieldsAvailable () {
-      return this._.filter(this.fields, (item) => {
+      return this._.filter(this.getAvailableFields('table'), (item) => {
         return item.value !== 'action'
       })
     },
@@ -91,7 +91,6 @@ export default {
   },
   data () {
     return {
-      componentType: 'table',
       numberType: ['number', 'decimal', 'integer', 'time', 'date', 'datetime', 'checkbox', 'boolean', 'slider']
     }
   }

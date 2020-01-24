@@ -53,6 +53,9 @@ export default {
     }
   },
   computed: {
+    fields () {
+      return this.getAvailableFields('table')
+    },
     headers () {
       let fields = this.fields
       this._.forEach(fields, (field, index) => {
@@ -66,11 +69,6 @@ export default {
         }
       })
       return fields
-    }
-  },
-  data () {
-    return {
-      componentType: 'table'
     }
   },
   methods: {
