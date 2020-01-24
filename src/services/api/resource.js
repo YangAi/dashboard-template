@@ -38,7 +38,7 @@ export default class Resource {
   }
 
   async update (id, payload) {
-    return this.patch(id, payload)
+    return this.put(id, payload)
   }
 
   async destroy (id) {

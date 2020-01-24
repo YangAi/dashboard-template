@@ -38,16 +38,42 @@ export default {
       return true
     }
   },
-  setRedirectUrl (params) {
-    const baseUrl = '/redirect'
-    // if (localStorage.token) {
-    //   params = Object.assign(params, { token: localStorage.token })
-    // }
-    params = Object.assign(params, {
-      previous_url: document.domain + window.location.pathname
-    })
-    const finalUrl = baseUrl + '?' + qs.stringify(params)
-    return finalUrl
+  isLatitude (lat) {
+    return !_.isNull(lat) && Math.abs(lat) < 90
+  },
+  isLongitude (lon) {
+    return !_.isNull(lon) && Math.abs(lon) < 180
+  },
+  async isUsCoordinates (lat, lon) {
+    if (!this.isLatitude(lat) || !this.isLongitude(lon)) {
+      return {
+        code: -2,
+        message: 'Please enter valid coordinates.'
+      }
+    }
+    const res = await api.gps.get({ lat, lon })
+    if (_.isEmpty(res.results)) {
+      return {
+        code: -1,
+        message: 'Please enter US coordinates.'
+      }
+    } else {
+      return {
+        code: 1,
+        message: 'Success.',
+        data: res
+      }
+    }
+  },
+  async isIndianaCoordinates (lat, lon) {
+    const res = await this.isUsCoordinates(lat, lon)
+    console.log('Indiana', res.code, typeof res.code, !res.code, !!res.code)
+    if (res.code < 1) return res
+    if (res.data.results[0].state_name !== 'Indiana') {
+      res.code = 0
+      res.message = 'Please enter Indiana coordinates.'
+    }
+    return res
   },
   setGoIndex () {
     if (window.history.length <= 1 || document.referrer === '' || (document.referrer !== '' && !document.referrer.indexOf('lvxingshai.com'))) {
@@ -57,84 +83,5 @@ export default {
         window.location.href = location.href + '&goindex=true'
       }
     }
-  },
-  setFanliRatio (ratio) {
-    if (!isNaN(ratio)) {
-      return ratio >= 50 ? ratio / 100 + '元' : ratio + '%'
-    } else {
-      return '加载中'
-    }
-  },
-  setSalePrice (price) {
-    if (!isNaN(price)) {
-      return price > 1 ? price + '元' : price * 10 + '折'
-    } else {
-      return '加载中'
-    }
-  },
-  getOrderStatus (status) {
-    switch (status) {
-      case 0:
-        return {
-          name: 'tracked',
-          description: '已追踪'
-        }
-      case 1:
-        return {
-          name: 'confirmed',
-          description: '待完成'
-        }
-      case 2:
-        return {
-          name: 'finished',
-          description: '已完成'
-        }
-      case -1:
-        return {
-          name: 'cancelled',
-          description: '已取消'
-        }
-      default:
-        return {
-          name: 'loading',
-          description: '加载中'
-        }
-    }
-  },
-  getFanliWebsitesByFilter (websites, category) {
-    if (!websites) {
-      return
-    }
-    switch (category) {
-      case 'topBrand':
-        return websites.filter(item => item.top_brand > 0)
-      case 'flyer':
-        return websites.filter(item => item.flyer > 0)
-      case 'hotels':
-        return websites.filter(item => item.category === '品类齐全' || item.category === '酒店集团' || item.category === '酒店预定' || item.category === '民宿预定')
-      case 'flights':
-        return websites.filter(item => item.category === '品类齐全' || item.category === '机票预定' || item.category === '航空公司')
-      case 'fun':
-        return websites.filter(item => item.category === '品类齐全' || item.category === '门票玩乐' || item.category === '旅行服务' || item.category === '度假线路' || item.category === '租车包车')
-      case 'shopping':
-        return websites.filter(item => item.category === '旅行生活')
-      default:
-        return websites
-    }
-  },
-  getRandomImage () {},
-  getLogoUrl (id, width = null, height = null) {
-    let url = 'https://source.lvxingshai.com/style/img/logo/' + id + '.png'
-    let size = ''
-    if (!_.isNull(width)) {
-      size = '/w/' + width
-    }
-    if (!_.isNull(height)) {
-      size = size + '/h/' + height
-    }
-    if (size) {
-      url = url + '?imageView2/1' + size
-    }
-    return url
   }
 }

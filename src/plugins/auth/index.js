@@ -1,27 +1,30 @@
 import Vue from 'vue'
-import vuex from './vuex'
+import vuex from './vuex/index.js'
 import api from '@/services/api'
 import router from '@/router'
 import localforage from 'localforage'
-import { isEmpty, trim, replace } from 'lodash'
+import { isEmpty, trim, replace, forEach, concat, uniqBy } from 'lodash'
 import utils from '@utils/client'
 import { setToken as setAjaxToken } from '@/plugins/http'
 import config from '@/config'
+import i18n from '@/locales'
 
 export function loginCheck (payload) {
+  return payload
 
+  /* eslint no-unreachable:0 */
   if ((!payload.phone && !payload.email && !payload.account && !payload.username) || (!payload.password && !payload.code)) {
-    Vue.$toast.error(config.messages.auth.error.required)
+    Vue.$toast.error(i18n.t('messages.auth.error.required'))
     return false
   }
 
   if (payload.email && !utils.isEmail(payload.email)) {
-    Vue.$toast.error(config.messages.auth.error.email)
+    Vue.$toast.error(i18n.t('messages.auth.error.email'))
     return false
   }
 
   if (payload.phone && !utils.isPhone(payload.phone)) {
-    Vue.$toast.error(config.messages.auth.error.phone)
+    Vue.$toast.error(i18n.t('messages.auth.error.phone'))
     return false
   }
 
@@ -46,7 +49,7 @@ export function loginCheck (payload) {
   } else if (payload.code && utils.isCode(payload.code)) {
     params.code = payload.code
   } else {
-    Vue.$toast.error(config.messages.auth.error.password)
+    Vue.$toast.error(i18n.t('messages.auth.error.password'))
     return false
   }
 
@@ -55,7 +58,7 @@ export function loginCheck (payload) {
 
 export default {
   get token () {
-    return isEmpty(vuex.state.auth.token) ? false : vuex.state.auth.token
+    return vuex.state.auth.token ? vuex.state.auth.token : false
   },
   get loggedIn () {
     return !!this.token
@@ -63,13 +66,16 @@ export default {
   get user () {
     return vuex.state.auth.user
   },
+  get permissions () {
+    return vuex.state.auth.permissions
+  },
   async login (payload) {
     const params = loginCheck(payload)
     if (!params) return false
     let res = await api[config.authResource].store(params)
     if (res) {
       this.setToken(res.token || res.access_token || res.data.token || res.data.access_token)
-      Vue.$toast.success(config.messages.auth.welcomeBack)
+      Vue.$toast.success(i18n.t('messages.auth.welcomeBack'))
       return res
     }
   },
@@ -77,10 +83,9 @@ export default {
     let res = await api[config.authResource].destroy('')
     if (res) {
       await this.removeToken()
-      Vue.$toast.success(config.messages.auth.logout)
+      Vue.$toast.success(i18n.t('messages.auth.logout'))
+      await router.push('/')
       return res
-      // TODO might have bug with router refresh
-      // router.go(0)
     }
   },
   async setUser (res) {
@@ -88,6 +93,27 @@ export default {
       res = await api.me.index()
     }
     vuex.dispatch('setUser', res.data || res)
+    if (config.hasPermissions) {
+      this.setPermissions()
+    }
+  },
+  async setPermissions () {
+    if (!this.permissions) {
+      let permissions = {}
+      const res = await api.me.get('permissions')
+      if (res.code === 0) {
+        forEach(res.data, (group, key) => {
+          permissions[key] = []
+          forEach(group, (roles) => {
+            permissions[key] = concat(permissions[key], roles.permissions)
+          })
+          permissions[key] = uniqBy(permissions[key], 'id')
+        })
+        await vuex.dispatch('setPermissions', permissions)
+      } else {
+        Vue.$toast.error(res.message || 'Error')
+      }
+    }
   },
   async hasScope (scope = 'is_admin') {
     if (isEmpty(this.user)) {

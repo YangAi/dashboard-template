@@ -2,7 +2,7 @@ import Vue from 'vue'
 import NProgress from 'nprogress'
 // import { isEmpty } from 'lodash'
 import Auth from '@/plugins/auth'
-import config from '@/config'
+import i18n from '@/locales'
 
 const beforeEach = async (to, from, next) => {
   NProgress.start()
@@ -13,23 +13,32 @@ const beforeEach = async (to, from, next) => {
 
   // access control for dashboard
   if (process.env.VUE_APP_SOURCE === 'Dashboard') {
-    console.log(Auth.token)
+    if (to.meta.auth === false) return next()
+
+    await Auth.getToken()
+
     if (Auth.token && Auth.user) {
-      // const hasRole = true
-      const hasRole = await Auth.hasScope('is_admin')
+      const hasRole = await Auth.hasRole(['super admin', 'yo'])
       if (!hasRole) {
-        Vue.$toast.error(config.messages.router.noPermission)
-        Auth.logout()
-        return next({ name: 'Auth.Login' }) // redirect to login
+        Vue.$toast.error(i18n.t('messages.router.noPermission'))
+        await Auth.logout()
+        return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
       }
       return next()
     } else {
-      Vue.$toast.error(config.messages.router.loginFirst)
-      return next({ name: 'Auth.Login' }) // redirect to login
+      Vue.$toast.error(i18n.t('messages.router.loginFirst'))
+    }
+
+    return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
+  } else {
+    if (!to.meta.auth) return next()
+    if (Auth.token && Auth.user) {
+      return next()
+    } else {
+      return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
     }
   }
 
-  return next()
 }
 
 export default beforeEach
