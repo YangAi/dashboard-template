@@ -1,3 +1,19 @@
+
+.theme--light.v-text-field.v-text-field--filled {
+  .v-input__control > .v-input__slot {
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.03);
+
+    &::before {
+      border-color: transparent;
+    }
+
+    .v-label {
+      color: rgba(0, 0, 0, 0.52)
+    }
+  }
+}
+
 .container {
   padding: 16px;
 }

@@ -77,9 +77,14 @@
     <!--    fast update dialog start-->
     <v-dialog v-if="canEdit" v-model="update.show" max-width="780">
       <v-card>
-        <v-card-title class="headline">
-          {{ $t('actions.update') + $crud[resource].title + ' - ' + update.form[$crud[resource].primaryKey] }}
+        <v-card-title class="headline tw-py-8">
+          <slot name="edit.dialog.title" :form="form || {}">
+            {{ $t('actions.update') + $crud[resource].title + ' - ' + update.form[$crud[resource].primaryKey] }}
+          </slot>
         </v-card-title>
+        <v-container class="tw-mb-4 tw-pt-0">
+          <v-divider />
+        </v-container>
         <v-card-text>
           <the-crud-panel-new-form v-model="update.form" :resource="resource" />
         </v-card-text>
