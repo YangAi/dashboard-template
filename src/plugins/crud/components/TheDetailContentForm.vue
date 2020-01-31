@@ -1,7 +1,7 @@
 <template>
   <section class="crud-detail-content-form">
     <v-card-text>
-      <the-crud-panel-new-form v-model="form" :resource="resource" />
+      <the-crud-panel-new-form v-model="innerValue" :resource="resource" @form="formHandle" />
     </v-card-text>
     <v-card-actions>
       <v-btn @click="submit">{{ $t('actions.submit') }}</v-btn>
@@ -23,7 +23,7 @@ export default {
     }
   },
   computed: {
-    form: {
+    innerValue: {
       get () {
         return this.value
       },
@@ -32,9 +32,24 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      form: {}
+    }
+  },
   methods: {
+    formHandle (val) {
+      this.form = val
+    },
     async submit () {
-      await http.update(this.resource, this.form)
+      try {
+        let form = this.form
+        form[this.primaryKey] = this.innerValue[this.primaryKey]
+        const res = await http.update(this.resource, form)
+        if (res) {
+          this.$emit('submit', this.innerValue)
+        }
+      } catch (e) {}
     }
   }
 }

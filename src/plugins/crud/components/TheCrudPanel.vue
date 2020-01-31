@@ -23,7 +23,7 @@
             <slot :name="`new.form.${field.value}`" :field="field" />
           </template>
         </the-crud-panel-new-dialog>
-        <the-crud-panel-filter :resource="resource" :filters="filters" @updateFilters="updateFilters" />
+        <the-crud-panel-filter :resource="resource" :filters="filters" @updateFilters="updateFilters" @resetFilters="$emit('resetFilters')" />
         <v-btn fab small dark color="blue-grey" @click="$emit('refresh')">
           <v-icon>mdi-refresh</v-icon>
         </v-btn>

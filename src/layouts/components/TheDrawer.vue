@@ -110,6 +110,20 @@ export default {
             }
           ]
         },
+        {
+          icon: 'mdi-tag-outline',
+          label: 'Messages',
+          children: [
+            {
+              to: 'Messages.Index',
+              label: 'All Messages'
+            },
+            {
+              to: 'Messages.New',
+              label: 'New Messages'
+            }
+          ]
+        },
         'Permissions',
         {
           to: 'FinalSale.New',
@@ -120,6 +134,12 @@ export default {
           to: 'FinalSale.New',
           icon: 'mdi-dots-horizontal',
           label: 'Roles'
+        },
+        'Logs',
+        {
+          to: 'Audits.Index',
+          icon: 'mdi-dots-horizontal',
+          label: 'Audits'
         }
       ]
     }

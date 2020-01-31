@@ -26,11 +26,28 @@ export default {
       type: Object
     }
   },
+  created () {
+    this.$emit('form', this.enabledForm)
+  },
   computed: {
     enabledFields () {
       return this._.filter(this.getAvailableFields('form'), (field) => {
         return !(field.disabled === true || (this.model.guarded && this.model.guarded.includes(field.value)))
       })
+    },
+    enabledForm: {
+      get () {
+        let form = {}
+        this._.forEach(this.enabledFields, (item) => {
+          form[item.value] = this.form[item.value]
+        })
+        return form
+      },
+      set (val) {
+        this._.forEach(val, (item, key) => {
+          this.form[key] = item
+        })
+      }
     },
     form: {
       get () {
@@ -39,6 +56,11 @@ export default {
       set (val) {
         this.$emit('input', val)
       }
+    }
+  },
+  watch: {
+    enabledForm () {
+      this.$emit('form', this.enabledForm)
     }
   }
 }

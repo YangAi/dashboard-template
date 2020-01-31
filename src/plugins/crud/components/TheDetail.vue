@@ -45,7 +45,7 @@
     <v-tabs-items v-model="activeTab">
       <v-tab-item value="main">
         <v-container>
-          <component :is="canLiveEdit ? 'the-detail-content-form' : 'the-detail-content-read-only'" :resource="resource" v-model="detail" />
+          <component :is="canLiveEdit ? 'the-detail-content-form' : 'the-detail-content-read-only'" :resource="resource" v-model="detail" @submit="updateForm" />
         </v-container>
       </v-tab-item>
       <v-tab-item v-for="tab in tabs" :key="tab.key" :value="tab.key">
@@ -113,12 +113,24 @@ export default {
       activeIndex: null,
       loading: false,
       detail: {},
-      canLiveEdit: false
+      canLiveEdit: false,
+      backUp: {
+        form: {},
+        readOnly: {}
+      }
     }
   },
   watch: {
     id () {
       this.loadItem()
+    },
+    canLiveEdit (newVal) {
+      if (newVal) {
+        this.detail = this._.cloneDeep(this.backUp.form)
+      } else {
+        this.backUp.form = this._.cloneDeep(this.detail)
+        this.detail = this._.cloneDeep(this.backUp.readOnly)
+      }
     }
   },
   methods: {
@@ -128,7 +140,7 @@ export default {
       try {
         const res = await http.find(this.resource, this.id, this.$crud[this.resource].relatedModel)
         if (res) {
-          this.detail = res.data
+          this.detail = this.backUp.form = this.backUp.readOnly = res.data
           if (!this._.isEmpty(this.idList)) this.activeIndex = this.idList.indexOf(this.id)
         }
       } catch (e) {
@@ -142,7 +154,6 @@ export default {
           this.activeIndex--
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
-          // TODO 加上i8n
           this.$toast.warning(this.$t('messages.firstData'))
         }
       }
@@ -151,7 +162,6 @@ export default {
           this.activeIndex++
           this.$emit('shift', this.idList[this.activeIndex])
         } else {
-          // TODO 加上i8n
           this.$toast.warning(this.$t('messages.lastData'))
         }
       }
@@ -165,6 +175,9 @@ export default {
       } else {
         return 'the-detail-content-read-only'
       }
+    },
+    updateForm (val) {
+      this.detail = this.backUp.form = this.backUp.readOnly = val
     }
   }
 }

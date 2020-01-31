@@ -15,9 +15,13 @@
             <v-select v-model="filters[item.value].mode" :items="numberType.includes(item.type) ? filterModes.number : filterModes.normal" item-text="text" item-value="value" hide-details />
           </v-col>
           <v-col :col="6">
-            <crud-input-field v-model="filters[item.value].value" :field="item" for-filter hide-details />
+            <crud-input-field original v-model="filters[item.value].value" :field="item" for-filter hide-details />
           </v-col>
         </v-row>
+      </v-list-item>
+      <v-list-item>
+        <v-spacer />
+        <v-btn text small color="primary" @click="$emit('resetFilters')">Reset Filter</v-btn>
       </v-list-item>
     </v-list>
   </v-menu>

@@ -1,24 +1,16 @@
 <template>
-  <v-simple-table>
-    <template v-slot:default>
-      <thead>
-      <tr>
-        <th class="text-left">Name</th>
-        <th class="text-left">Value</th>
-      </tr>
-      </thead>
-      <tbody>
-      <template v-for="(item, key) in items">
-        <tr v-if="!_.isObject(item)" :key="key">
-          <td>{{ getName(key) }}:</td>
-          <td>
-            <the-crud-table-field-normal :resource="resource" :value="item" :field="getField(key)" />
-          </td>
-        </tr>
-      </template>
-      </tbody>
-    </template>
-  </v-simple-table>
+    <section>
+        <v-row>
+            <template v-for="(item, key) in items">
+                <v-col v-if="!_.isObject(item)" :cols="6" :md="4" lg="3" :key="key">
+                    <h3 class="subtitle-2 tw-text-gray-500">{{ _.capitalize(_.lowerCase(key)) }}:</h3>
+                    <div class="body-1 text-black">
+                        <the-crud-table-field-normal :resource="resource" :value="item" :field="getField(key)" />
+                    </div>
+                </v-col>
+            </template>
+        </v-row>
+    </section>
 </template>
 
 <script>
