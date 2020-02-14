@@ -2,6 +2,7 @@
   <v-list v-bind="$attrs">
     <base-nav-list-item
       v-for="(item, index) in list"
+      v-bind="$attrs"
       :item="item"
       :key="index"
     />

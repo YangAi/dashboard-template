@@ -80,12 +80,12 @@ export default {
     }
   },
   async logout () {
-    await this.removeToken()
-    Vue.$toast.success(i18n.t('messages.auth.logout'))
-    await router.push('/')
-    let res = await api[config.authResource].destroy('')
-    if (res) {
-      return res
+    try {
+      await this.removeToken()
+      api[config.authResource].destroy('')
+      Vue.$toast.success(i18n.t('messages.auth.logout'))
+      await router.push('/')
+    } catch (e) {
     }
   },
   async setUser (res) {
@@ -165,13 +165,14 @@ export default {
     }
   },
   async removeToken () {
-    const result = await localforage.removeItem('token')
-    if (result) {
-      // !NOTE  ajax token not delete
+    try {
+      await localforage.removeItem('token')
       vuex.dispatch('setToken', null)
       vuex.dispatch('setUser', {})
       setAjaxToken(false)
       router.go(-1)
+    } catch (e) {
+      console.log(e)
     }
   }
 }

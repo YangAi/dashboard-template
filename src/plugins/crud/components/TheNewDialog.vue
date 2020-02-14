@@ -13,9 +13,6 @@
           {{ $t('actions.add') }} {{ model.title }}
         </slot>
       </v-card-title>
-      <v-container class="tw-mb-4 tw-pt-0">
-        <v-divider />
-      </v-container>
       <v-card-text>
         <the-crud-panel-new-form v-model="form" :resource="resource" v-bind="$attrs">
           <template v-for="field in fields" v-slot:[`new.form.${field.value}`]="{ field }">

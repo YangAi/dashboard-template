@@ -142,7 +142,7 @@ export default {
       this.filters = filters
     },
     resetFilters () {
-      this._.forEach(this.fields, (field) => {
+      this._.forEach(this.model.fields, (field) => {
         this.$set(this.filters, field.value, {
           mode: 'equal',
           value: ''

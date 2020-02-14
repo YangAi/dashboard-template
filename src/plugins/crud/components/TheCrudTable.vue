@@ -91,6 +91,8 @@ export default {
       return true
     },
     normalFilter (item, fieldValue) {
+      // !!TODO if the field value is empty, what should do filter do.
+      if (!fieldValue) return false
       const filter = this.filters[item.value].value.toString().toLowerCase()
       const field = fieldValue.toString().toLowerCase()
       switch (this.filters[item.value].mode) {

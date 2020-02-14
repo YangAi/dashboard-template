@@ -2,21 +2,20 @@
   <v-navigation-drawer
     id="app-drawer"
     v-model="open"
+    class="tw-border-right tw-border-solid tw-border-gray-200 tw-p-4"
     src=""
     app
-    color="grey darken-2"
-    dark
     floating
     mobile-break-point="991"
     persistent
-    width="260"
+    width="320"
   >
-    <template v-slot:img="attrs">
-      <v-img src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"
-             gradient="to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)"
-             height="100%"
-      />
-    </template>
+<!--    <template v-slot:img="attrs">-->
+<!--      <v-img src="https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg"-->
+<!--             gradient="to top, rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)"-->
+<!--             height="100%"-->
+<!--      />-->
+<!--    </template>-->
 
     <v-list-item two-line class="tw-mt-8">
 <!--      <v-list-item-avatar color="white" size="48">-->
@@ -34,7 +33,7 @@
 
     <v-divider class="mx-3 mb-3" />
 
-    <base-nav-list nav dense :list="list" />
+    <base-nav-list nav dense :list="list" exact active-class="green white--text" />
 
     <template v-slot:append>
       <v-list nav>
@@ -84,45 +83,17 @@ export default {
         {
           icon: 'mdi-timeline-text-outline',
           label: 'Spring',
-          children: [
-            {
-              to: 'Springs.Index',
-              label: 'All Springs'
-            },
-            {
-              to: 'Springs.New',
-              icon: 'mdi-timeline-text-outline',
-              label: 'New Springs'
-            }
-          ]
+          to: 'Springs.Index'
         },
         {
           icon: 'mdi-tag-outline',
           label: 'Records',
-          children: [
-            {
-              to: 'Records.Index',
-              label: 'All Records'
-            },
-            {
-              to: 'Records.New',
-              label: 'New Record'
-            }
-          ]
+          to: 'Records.Index'
         },
         {
           icon: 'mdi-tag-outline',
           label: 'Messages',
-          children: [
-            {
-              to: 'Messages.Index',
-              label: 'All Messages'
-            },
-            {
-              to: 'Messages.New',
-              label: 'New Messages'
-            }
-          ]
+          to: 'Messages.Index'
         },
         'Permissions',
         {

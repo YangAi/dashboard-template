@@ -16,19 +16,51 @@
 
 .container {
   padding: 16px;
+  &.container--fluid {
+    max-width: 100%;
+  }
+}
+.v-divider {
+  border-color: #e2e8f0!important;
+}
+.v-app-bar.bordered {
+  @apply border-b border-solid border-gray-200;
 }
 .v-tab {
   min-width: 0;
-  margin: 0 8px;
+  margin: 0 0 0 16px;
   padding: 0;
   font-size: 16px;
+  font-weight: 400;
   text-transform: capitalize;
-}
-@media (min-width: 960px) {
-  .v-tab {
-    margin: 0 12px;
+  &:before {
+    background-color: transparent;
   }
 }
+
 .v-tabs-slider-wrapper {
-  height: 4px!important;
+  height: 2px!important;
+}
+
+.v-subheader + .container {
+  padding-top: 0;
+}
+
+.v-card__text + .v-card__text {
+  padding-top: 0;
+}
+
+.v-card__subtitle + .v-card__title {
+  margin-top: -16px;
+  padding-top: 0;
+}
+.v-card__title + .container, .v-card__text + .v-card__actions{
+  padding-top: 0;
+}
+
+.v-card__actions {
+  padding: 16px;
+}
+.v-dialog > .v-card > .v-card__actions {
+  padding: 0 24px 20px;
 }

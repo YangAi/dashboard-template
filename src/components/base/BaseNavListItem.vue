@@ -8,7 +8,7 @@
       </v-list-item-icon>
       <v-list-item-title>{{ item.label }}</v-list-item-title>
     </template>
-    <base-nav-list-item v-for="(child, index) in item.children" :item="child" :key="'z' + index" sub-group no-action />
+    <base-nav-list-item v-for="(child, index) in item.children" v-bind="$attrs" :item="child" :key="'z' + index" sub-group no-action />
   </v-list-group>
   <v-list-item v-else v-bind="$attrs" link :to="{name: item.to}">
     <v-list-item-icon v-if="item.icon">

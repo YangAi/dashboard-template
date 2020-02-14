@@ -1,11 +1,14 @@
 <template>
     <v-container>
         <v-card style="max-width: 768px">
+            <v-card-title>
+                New Spring
+            </v-card-title>
             <v-card-text>
                 <the-crud-panel-new-form :resource="resource" v-model="form" />
             </v-card-text>
-            <v-card-actions>
-                <v-btn color="primary">{{ $t('actions.submit') }}</v-btn>
+            <v-card-actions class="tw-p-4">
+                <v-btn dark large @click="submit">{{ $t('actions.submit') }}</v-btn>
             </v-card-actions>
         </v-card>
     </v-container>

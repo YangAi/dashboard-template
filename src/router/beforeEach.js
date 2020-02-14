@@ -12,19 +12,14 @@ const beforeEach = async (to, from, next) => {
   await Auth.getToken()
 
   // access control for dashboard
-  if (process.env.VUE_APP_SOURCE === 'Dashboard') {
+  if (process.env.VUE_APP_SOURCE === 'dashboard') {
     if (to.meta.auth === false) return next()
 
     await Auth.getToken()
-    let hasRole
+
     if (Auth.token && Auth.user) {
-      try {
-        hasRole = await Auth.hasRole(['super admin'])
-      } catch (e) {
-        hasRole = false
-      }
+      const hasRole = await Auth.hasRole(['super admin', 'yo'])
       if (!hasRole) {
-        console.log('has role false')
         Vue.$toast.error(i18n.t('messages.router.noPermission'))
         await Auth.logout()
         return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
@@ -36,6 +31,7 @@ const beforeEach = async (to, from, next) => {
 
     return next({ name: 'Auth.Login', query: { message: 1 } }) // redirect to login
   } else {
+    await Auth.getToken()
     if (!to.meta.auth) return next()
     if (Auth.token && Auth.user) {
       return next()

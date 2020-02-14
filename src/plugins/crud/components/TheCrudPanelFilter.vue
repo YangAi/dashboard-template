@@ -5,7 +5,12 @@
         <v-icon>mdi-filter</v-icon>
       </v-btn>
     </template>
-    <v-list>
+    <v-list class="tw-pb-4">
+      <v-list-item>
+        <v-list-item-title class="title">Filter</v-list-item-title>
+        <v-spacer />
+        <v-btn text small color="primary" @click="$emit('resetFilters')">Reset</v-btn>
+      </v-list-item>
       <v-list-item v-for="(item, index) in fieldsAvailable" :key="index">
         <v-row no-gutters>
           <v-col v-if="['boolean', 'checkbox'].includes(item.type)" :col="12">
@@ -15,13 +20,9 @@
             <v-select v-model="filters[item.value].mode" :items="numberType.includes(item.type) ? filterModes.number : filterModes.normal" item-text="text" item-value="value" hide-details />
           </v-col>
           <v-col :col="6">
-            <crud-input-field original v-model="filters[item.value].value" :field="item" for-filter hide-details />
+            <crud-input-field original v-model="filters[item.value].value" :field="item" :disabled="false" for-filter hide-details />
           </v-col>
         </v-row>
-      </v-list-item>
-      <v-list-item>
-        <v-spacer />
-        <v-btn text small color="primary" @click="$emit('resetFilters')">Reset Filter</v-btn>
       </v-list-item>
     </v-list>
   </v-menu>

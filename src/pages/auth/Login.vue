@@ -47,6 +47,7 @@ export default {
       this.loading = true
       try {
         const res = await this.$auth.login(this.form)
+        console.log('res', res)
         if (res) {
           await this.$router.push({ name: 'Home.Index' })
         }
